@@ -1,4 +1,4 @@
-# DJ Library Automation & Helpers
+# Handshakes DJ - DJ Library Tools
 
 This repository contains a collection of PowerShell and Python scripts designed to automate, clean up, and synchronize a DJ library (Rekordbox and Serato). 
 
