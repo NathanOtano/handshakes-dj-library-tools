@@ -187,7 +187,7 @@ pwsh -NoProfile -File .\scripts\Audit-DjChromaprintOverlap.ps1 -RootPath "C:\DJ_
 
 ## `Resolve-DjGenreCandidates.ps1`
 
-Construit des propositions de genre pour les échecs AutoTagger sans modifier les fichiers audio. Le script lit les rapports dérivés AutoTagger, garde les succès historiques par plateforme, peut relire les tags `genre` / `style` déjà présents avec `ffprobe`, et écrit les rapports sous `reports/`.
+Construit des propositions de genre pour les échecs OneTagger sans modifier les fichiers audio. Le script lit les rapports dérivés OneTagger, garde les succès historiques par plateforme, peut relire les tags `genre` / `style` déjà présents avec `ffprobe`, et écrit les rapports sous `reports/`.
 
 ```powershell
 pwsh -NoProfile -File .\scripts\Resolve-DjGenreCandidates.ps1 -Mode Worklist -Json
@@ -199,45 +199,45 @@ pwsh -NoProfile -File .\scripts\Resolve-DjGenreCandidates.ps1 -Mode AudioReadine
 ```
 
 Les sources API et les règles de scraping désactivées par défaut sont dans `config/dj-genre-resolver.sources.json`.
-La source `spotify_direct` utilise l’API Web Spotify directement, avec plusieurs requêtes fuzzy artiste/titre, puis les genres d’artistes Spotify comme indice. Elle utilise `SPOTIFY_CLIENT_ID` et `SPOTIFY_CLIENT_SECRET` si ces variables existent, sinon elle relit les identifiants Spotify du `settings.json` local AutoTagger. Elle reste en lecture seule comme les autres sources :
+La source `spotify_direct` utilise l’API Web Spotify directement, avec plusieurs requêtes fuzzy artiste/titre, puis les genres d’artistes Spotify comme indice. Elle utilise `SPOTIFY_CLIENT_ID` et `SPOTIFY_CLIENT_SECRET` si ces variables existent, sinon elle relit les identifiants Spotify du `settings.json` local OneTagger. Elle reste en lecture seule comme les autres sources :
 
 ```powershell
-pwsh -NoProfile -File .\scripts\Resolve-DjGenreCandidates.ps1 -Mode Resolve -InputM3uPath reports\AutoTagger-platform-coverage-20260526-191348-final-spotify-complete-spotify-error-no-ok.m3u -Sources spotify_direct -Limit 20 -Json
+pwsh -NoProfile -File .\scripts\Resolve-DjGenreCandidates.ps1 -Mode Resolve -InputM3uPath reports\OneTagger-platform-coverage-20260526-191348-final-spotify-complete-spotify-error-no-ok.m3u -Sources spotify_direct -Limit 20 -Json
 ```
 
 Le mode `Resolve` refuse un run API non borné sans `-InputM3uPath`, `-Limit` ou `-WorklistScope`.
 
-## `Start-AutoTaggerCoverageRun.ps1`
+## `Start-OneTaggerCoverageRun.ps1`
 
-Lance AutoTagger en mode serveur avec un runner traçable pour compléter une couverture de plateforme. Par défaut, le script garde `overwrite=false` pour éviter de remplacer les genres existants, mais AutoTagger reste un outil qui écrit dans les fichiers audio. AutoTagger 1.7.0 ne traite pas un `.m3u` passé comme `path` dans cette voie : utiliser un vrai dossier audio.
+Lance OneTagger en mode serveur avec un runner traçable pour compléter une couverture de plateforme. Par défaut, le script garde `overwrite=false` pour éviter de remplacer les genres existants, mais OneTagger reste un outil qui écrit dans les fichiers audio. OneTagger 1.7.0 ne traite pas un `.m3u` passé comme `path` dans cette voie : utiliser un vrai dossier audio.
 
 ```powershell
-pwsh -NoProfile -File .\scripts\Start-AutoTaggerCoverageRun.ps1 -TargetPath "C:\DJ_Music\Processed_Library_Root\260517_DL" -Platforms spotify -Threads 2 -RunInForeground -Json
+pwsh -NoProfile -File .\scripts\Start-OneTaggerCoverageRun.ps1 -TargetPath "C:\DJ_Music\Processed_Library_Root\260517_DL" -Platforms spotify -Threads 2 -RunInForeground -Json
 ```
 
-## `Update-AutoTaggerPlatformCoverage.ps1`
+## `Update-OneTaggerPlatformCoverage.ps1`
 
-Recalcule la couverture par plateforme depuis les logs JSONL AutoTagger et écrit un résumé + des M3U de reprise sous `reports/`. Les M3U sont des listes de contrôle/reprise, pas des cibles directes AutoTagger dans le mode serveur actuel.
+Recalcule la couverture par plateforme depuis les logs JSONL OneTagger et écrit un résumé + des M3U de reprise sous `reports/`. Les M3U sont des listes de contrôle/reprise, pas des cibles directes OneTagger dans le mode serveur actuel.
 
 ```powershell
-pwsh -NoProfile -File .\scripts\Update-AutoTaggerPlatformCoverage.ps1 -Label latest -Json
+pwsh -NoProfile -File .\scripts\Update-OneTaggerPlatformCoverage.ps1 -Label latest -Json
 ```
 
-## `Invoke-AutoTaggerSpotifyRetry.ps1`
+## `Invoke-OneTaggerSpotifyRetry.ps1`
 
-Contrôleur de reprise Spotify. Il recalcule la couverture, respecte le cooldown Spotify détecté dans les logs, saute si AutoTagger tourne déjà, puis relance une passe `spotify` avec `overwrite=false` quand la limite est expirée. Il cible d’abord `C:\DJ_Music\Processed_Library_Root\_ALL`, puis les fichiers restants un par un si seuls des chemins hors `_ALL` manquent encore.
+Contrôleur de reprise Spotify. Il recalcule la couverture, respecte le cooldown Spotify détecté dans les logs, saute si OneTagger tourne déjà, puis relance une passe `spotify` avec `overwrite=false` quand la limite est expirée. Il cible d’abord `C:\DJ_Music\Processed_Library_Root\_ALL`, puis les fichiers restants un par un si seuls des chemins hors `_ALL` manquent encore.
 
 ```powershell
-pwsh -NoProfile -File .\scripts\Invoke-AutoTaggerSpotifyRetry.ps1 -Json
-pwsh -NoProfile -File .\scripts\Invoke-AutoTaggerSpotifyRetry.ps1 -Apply -Json
+pwsh -NoProfile -File .\scripts\Invoke-OneTaggerSpotifyRetry.ps1 -Json
+pwsh -NoProfile -File .\scripts\Invoke-OneTaggerSpotifyRetry.ps1 -Apply -Json
 ```
 
-## `Register-AutoTaggerSpotifyRetryTask.ps1`
+## `Register-OneTaggerSpotifyRetryTask.ps1`
 
-Enregistre la tâche planifiée Windows `DJ Library AutoTagger Spotify Retry`, qui appelle le contrôleur de reprise régulièrement en fenêtre cachée et écrit son état sous `runtime/AutoTagger-spotify-retry/`.
+Enregistre la tâche planifiée Windows `DJ Library OneTagger Spotify Retry`, qui appelle le contrôleur de reprise régulièrement en fenêtre cachée et écrit son état sous `runtime/OneTagger-spotify-retry/`.
 
 ```powershell
-pwsh -NoProfile -File .\scripts\Register-AutoTaggerSpotifyRetryTask.ps1 -IntervalMinutes 120 -Apply -Json
+pwsh -NoProfile -File .\scripts\Register-OneTaggerSpotifyRetryTask.ps1 -IntervalMinutes 120 -Apply -Json
 ```
 
 ## `Resolve-DjChromaprintDuplicates.ps1`

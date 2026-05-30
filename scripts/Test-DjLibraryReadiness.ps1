@@ -137,7 +137,7 @@ $folders = foreach ($folder in $folderSpecs) {
 
 $tools = @(
     Test-ConfiguredTool -Key 'processed_library_root' -DisplayName $config.toolHints.processed_library_root.displayName -ConfiguredPath $config.toolHints.processed_library_root.configuredPath -CommandNames @('Processed_Library_Root Notes', 'Processed_Library_Root Notes.exe', 'Processed_Library_RootNotes', 'Processed_Library_RootNotes.exe')
-    Test-ConfiguredTool -Key 'AutoTagger' -DisplayName $config.toolHints.AutoTagger.displayName -ConfiguredPath $config.toolHints.AutoTagger.configuredPath -CommandNames @('AutoTagger', 'AutoTagger.exe', 'AutoTagger', 'AutoTagger.exe')
+    Test-ConfiguredTool -Key 'OneTagger' -DisplayName $config.toolHints.OneTagger.displayName -ConfiguredPath $config.toolHints.OneTagger.configuredPath -CommandNames @('OneTagger', 'OneTagger.exe', 'OneTagger', 'OneTagger.exe')
     Test-ConfiguredTool -Key 'fpcalc' -DisplayName $config.toolHints.chromaprint.displayName -ConfiguredPath $config.toolHints.chromaprint.configuredPath -CommandNames @('fpcalc', 'fpcalc.exe')
     Test-ConfiguredTool -Key 'tidalDl' -DisplayName 'tidal-dl (documented only)' -ConfiguredPath $null -CommandNames @('tidal-dl', 'tidal-dl.exe')
 )

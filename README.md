@@ -30,7 +30,7 @@ Most scripts take arguments like `-MusicRoot` or `--music-root`. Alternatively, 
 - **`scripts/`**: Contains all the automation logic.
   - `.ps1` files: Main entry points and task runners.
   - `.py` files: Core logic, database interactions, and metadata processing.
-  - `.js` files: Scripts for integrations like AutoTagger.
+  - `.js` files: Scripts for integrations like OneTagger.
 - **`ui/`**: A modern Tauri frontend providing a simple visual interface to run scripts.
 
 ## Usage (Graphical Interface)
@@ -77,5 +77,5 @@ Users are responsible for ensuring that their use of these scripts complies with
 **3. Trademarks & Affiliation**
 - **Rekordbox** and **Pioneer DJ** are trademarks of AlphaTheta Corporation.
 - **Serato** is a trademark of Serato Limited.
-- **Spotify**, **TIDAL**, **Audio Processor**, and **AutoTagger** are trademarks of their respective owners.
+- **Spotify**, **TIDAL**, **Audio Processor**, and **OneTagger** are trademarks of their respective owners.
 - This project is **100% unofficial and independent**. It is not affiliated with, sponsored by, or endorsed by AlphaTheta, Pioneer DJ, Serato, or any other mentioned brand. All trademarks belong to their respective owners.

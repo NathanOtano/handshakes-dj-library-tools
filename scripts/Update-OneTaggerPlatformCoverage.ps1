@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string] $BaselineCsvPath = (Join-Path $PSScriptRoot '..\reports\AutoTagger-run-20260524-004620\derived-latest-state-by-path.csv'),
+    [string] $BaselineCsvPath = (Join-Path $PSScriptRoot '..\reports\OneTagger-run-20260524-004620\derived-latest-state-by-path.csv'),
     [string] $ReportRoot = (Join-Path $PSScriptRoot '..\reports'),
     [string] $Label = 'latest',
     [string[]] $Platforms = @('Spotify', 'Deezer'),
@@ -65,8 +65,8 @@ foreach ($platform in $Platforms) {
 }
 
 $eventLogs = Get-ChildItem -LiteralPath $reportRootFullPath -Directory |
-    Where-Object { $_.Name -like 'AutoTagger-run-*' -or $_.Name -like 'AutoTagger-coverage-*' } |
-    ForEach-Object { Join-Path $_.FullName 'AutoTagger-events.jsonl' } |
+    Where-Object { $_.Name -like 'OneTagger-run-*' -or $_.Name -like 'OneTagger-coverage-*' } |
+    ForEach-Object { Join-Path $_.FullName 'OneTagger-events.jsonl' } |
     Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } |
     Sort-Object
 
@@ -133,7 +133,7 @@ foreach ($eventLog in $eventLogs) {
 
 $timestamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $safeLabel = ($Label -replace '[^A-Za-z0-9_.-]', '-')
-$prefix = "AutoTagger-platform-coverage-$timestamp-$safeLabel"
+$prefix = "OneTagger-platform-coverage-$timestamp-$safeLabel"
 $summaryPath = Join-Path $reportRootFullPath "$prefix-summary.json"
 
 $platformSummary = @{}
@@ -197,7 +197,7 @@ $summary = [pscustomobject]@{
     platforms = $platformSummary
     spotifyMissingByFolder = $spotifyMissingByFolder
     summaryJson = $summaryPath
-    note = 'Coverage is derived from AutoTagger JSONL taggingProgress events. M3U files are worklists, not direct AutoTagger targets in the current server path mode.'
+    note = 'Coverage is derived from OneTagger JSONL taggingProgress events. M3U files are worklists, not direct OneTagger targets in the current server path mode.'
 }
 
 $summary | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $summaryPath -Encoding UTF8
