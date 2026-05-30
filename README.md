@@ -48,6 +48,21 @@ pwsh -NoProfile -File .\scripts\Add-RekordboxPlatinumContent.ps1 -Mode Plan -Dup
 
 > **Warning**: Modifying the Rekordbox `master.db` directly carries risks. Always ensure Rekordbox is closed and you have backups before running scripts with `-Apply` flags.
 
-## Disclaimer
+## Legal & Copyright Disclaimer
 
-These scripts interact directly with Rekordbox databases and file systems. They are provided as-is without any warranties. Always back up your `master.db` and your audio files before running any destructive operations (like duplicate removals or relinking).
+> [!WARNING]
+> **Use at Your Own Risk.** These scripts interact directly with Rekordbox/Serato SQLite databases and file systems. Incorrect use **can corrupt your library**. Always back up your `master.db` and your audio files before running any destructive operations (like duplicate removals or relinking).
+
+**1. Personal Use Only & Copyright**
+This project is intended strictly for personal, private management of **legally acquired** audio files (e.g., purchases, legal promos, record pools). 
+- This repository **does not** contain or distribute copyrighted audio files.
+- The author does not endorse, encourage, or facilitate the unauthorized downloading, ripping, or distribution of copyrighted material. Any scripts interfacing with third-party APIs (like Spotify or TIDAL) are meant solely for metadata matching and library coverage auditing.
+
+**2. Terms of Service**
+Users are responsible for ensuring that their use of these scripts complies with the Terms of Service of any third-party software, streaming platform, or API they interact with.
+
+**3. Trademarks & Affiliation**
+- **Rekordbox** and **Pioneer DJ** are trademarks of AlphaTheta Corporation.
+- **Serato** is a trademark of Serato Limited.
+- **Spotify**, **TIDAL**, **Platinum Notes**, and **OneTagger** are trademarks of their respective owners.
+- This project is **100% unofficial and independent**. It is not affiliated with, sponsored by, or endorsed by AlphaTheta, Pioneer DJ, Serato, or any other mentioned brand. All trademarks belong to their respective owners.
