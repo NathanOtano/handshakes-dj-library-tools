@@ -32,6 +32,8 @@ Most scripts take arguments like `-MusicRoot` or `--music-root`. Alternatively, 
   - `.py` files: Core logic, database interactions, and metadata processing.
   - `.js` files: Scripts for integrations like OneTagger.
 - **`ui/`**: A modern Tauri frontend providing a simple visual interface to run scripts.
+- **`docs/`**: Technical documentation.
+  - [`USB_MIDI_MAPPING_GUIDE.md`](file:///c:/Users/Nathan/Documents/Code/dj-library-public/docs/USB_MIDI_MAPPING_GUIDE.md): Guide on reverse-engineering proprietary USB controllers (like the XDJ-AERO) into standard Windows MIDI.
 
 ## Usage (Graphical Interface)
 
