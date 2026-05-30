@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build genre candidates for OneTagger failures without mutating audio files."""
+"""Build genre candidates for AutoTagger failures without mutating audio files."""
 
 from __future__ import annotations
 
@@ -294,7 +294,7 @@ def build_worklist(
                     "path": path_text,
                     "status": "input_m3u",
                     "platform": "input_m3u",
-                    "message": "Path supplied by InputM3uPath and absent from latest OneTagger state.",
+                    "message": "Path supplied by InputM3uPath and absent from latest AutoTagger state.",
                     "accuracy": "",
                     "ts": "",
                 },
@@ -317,7 +317,7 @@ def count_m3u_paths(path: Path) -> tuple[int, set[str]]:
     return len(paths), paths
 
 
-def source_integrity(onetagger_run: Path, latest_rows: list[dict[str, str]], attempts_by_path: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
+def source_integrity(AutoTagger_run: Path, latest_rows: list[dict[str, str]], attempts_by_path: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
     latest_paths = {row.get("path", "") for row in latest_rows if row.get("path")}
     latest_ok = {row.get("path", "") for row in latest_rows if row.get("status", "").casefold() == "ok"}
     latest_error = {row.get("path", "") for row in latest_rows if row.get("status", "").casefold() == "error"}
@@ -328,8 +328,8 @@ def source_integrity(onetagger_run: Path, latest_rows: list[dict[str, str]], att
     }
     never_ok = latest_paths - any_prior_ok
     masked_prior_ok = latest_error & any_prior_ok
-    success_count, success_paths = count_m3u_paths(onetagger_run / "derived-success-latest-state.m3u")
-    failed_count, failed_paths = count_m3u_paths(onetagger_run / "derived-failed-latest-state.m3u")
+    success_count, success_paths = count_m3u_paths(AutoTagger_run / "derived-success-latest-state.m3u")
+    failed_count, failed_paths = count_m3u_paths(AutoTagger_run / "derived-failed-latest-state.m3u")
     platform_attempts: dict[str, dict[str, int]] = {}
     used_shazam = 0
     latest_ok_low_accuracy = 0
@@ -783,7 +783,7 @@ def spotify_access_token(runtime_root: Path) -> str:
     client_id = os.environ.get("SPOTIFY_CLIENT_ID", "").strip()
     client_secret = os.environ.get("SPOTIFY_CLIENT_SECRET", "").strip()
     if not client_id or not client_secret:
-        client_id, client_secret = spotify_credentials_from_onetagger_config()
+        client_id, client_secret = spotify_credentials_from_AutoTagger_config()
     if not client_id or not client_secret:
         return ""
     token_cache = runtime_root / "spotify-token-cache.json"
@@ -828,11 +828,11 @@ def spotify_access_token(runtime_root: Path) -> str:
     return token
 
 
-def spotify_credentials_from_onetagger_config() -> tuple[str, str]:
+def spotify_credentials_from_AutoTagger_config() -> tuple[str, str]:
     appdata = os.environ.get("APPDATA", "")
     if not appdata:
         return "", ""
-    settings_path = Path(appdata) / "OneTagger" / "OneTagger" / "config" / "settings.json"
+    settings_path = Path(appdata) / "AutoTagger" / "AutoTagger" / "config" / "settings.json"
     if not settings_path.exists():
         return "", ""
     try:
@@ -1277,7 +1277,7 @@ def propose_resolutions(worklist: list[dict[str, Any]], candidates: list[dict[st
 
         if item.get("no_platform_ok") and confidence not in {"high", "medium"}:
             decision_state = "manual_review"
-            review_reason = (review_reason + "; " if review_reason else "") + "no OneTagger platform ok"
+            review_reason = (review_reason + "; " if review_reason else "") + "no AutoTagger platform ok"
         if int(item.get("artist_count") or 0) > 2 and confidence not in {"high", "medium"}:
             decision_state = "manual_review"
             review_reason = (review_reason + "; " if review_reason else "") + "multiple artists"
@@ -1423,7 +1423,7 @@ def main() -> int:
     parser.add_argument("--repo-root", required=True)
     parser.add_argument("--config", required=True)
     parser.add_argument("--source-config", required=True)
-    parser.add_argument("--onetagger-run", required=True)
+    parser.add_argument("--AutoTagger-run", required=True)
     parser.add_argument("--reports-root", required=True)
     parser.add_argument("--runtime-root", required=True)
     parser.add_argument("--mode", choices=["worklist", "resolve", "verify", "audioreadiness"], default="worklist")
@@ -1443,7 +1443,7 @@ def main() -> int:
     repo_root = Path(args.repo_root)
     _ = load_json(Path(args.config))
     source_config = load_json(Path(args.source_config))
-    onetagger_run = Path(args.onetagger_run)
+    AutoTagger_run = Path(args.AutoTagger_run)
     reports_root = Path(args.reports_root)
     runtime_root = Path(args.runtime_root)
     ensure_dir(reports_root)
@@ -1460,14 +1460,14 @@ def main() -> int:
         print_json(payload)
         return 0
 
-    latest_csv = onetagger_run / "derived-latest-state-by-path.csv"
-    events_jsonl = onetagger_run / "onetagger-events.jsonl"
+    latest_csv = AutoTagger_run / "derived-latest-state-by-path.csv"
+    events_jsonl = AutoTagger_run / "AutoTagger-events.jsonl"
     if not latest_csv.exists():
         raise FileNotFoundError(latest_csv)
 
     latest_rows = read_latest_state(latest_csv)
     attempts_by_path = read_attempts(events_jsonl)
-    integrity = source_integrity(onetagger_run, latest_rows, attempts_by_path)
+    integrity = source_integrity(AutoTagger_run, latest_rows, attempts_by_path)
     selected_input_m3u = Path(args.input_m3u) if args.input_m3u else latest_scope_m3u(reports_root, args.worklist_scope)
     if args.mode == "resolve" and selected_input_m3u is None and args.limit <= 0:
         raise ValueError(
@@ -1526,7 +1526,7 @@ def main() -> int:
         "schema": SCHEMA_VERSION,
         "mode": args.mode,
         "generatedAt": utc_now(),
-        "onetaggerRunPath": str(onetagger_run),
+        "AutoTaggerRunPath": str(AutoTagger_run),
         "worklistScope": args.worklist_scope,
         "inputM3uPath": str(selected_input_m3u) if selected_input_m3u is not None else "",
         "inputM3uPathCount": len(path_filter) if path_filter is not None else None,

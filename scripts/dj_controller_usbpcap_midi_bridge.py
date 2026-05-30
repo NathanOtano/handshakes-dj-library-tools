@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Forward XDJ-AERO USBPcap USB-MIDI packets to a WinMM MIDI output port."""
+"""Forward DJ-Controller USBPcap USB-MIDI packets to a WinMM MIDI output port."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import BinaryIO, Iterable
 
-from xdj_aero_usbpcap_extract import (
+from dj_controller_usbpcap_extract import (
     CIN_LENGTHS,
     PCAP_MICRO_MAGIC,
     PcapRecord,
@@ -129,7 +129,7 @@ def follow_pcap_records(path: Path, poll_seconds: float) -> Iterable[tuple[dict[
 
     handle = path.open("rb")
     magic = handle.read(4)
-    from xdj_aero_usbpcap_extract import PCAP_MICRO_MAGIC, PcapRecord
+    from dj_controller_usbpcap_extract import PCAP_MICRO_MAGIC, PcapRecord
 
     if magic not in PCAP_MICRO_MAGIC:
         handle.close()
@@ -390,10 +390,10 @@ def run_bridge(args: argparse.Namespace) -> dict[str, object]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Forward XDJ-AERO USB-MIDI packets from USBPcap to a WinMM MIDI output."
+        description="Forward DJ-Controller USB-MIDI packets from USBPcap to a WinMM MIDI output."
     )
     parser.add_argument("--input", help="USBPcap .pcap file to read or follow.")
-    parser.add_argument("--output-name", default="XDJ-AERO Bridge (B)", help="WinMM MIDI output name.")
+    parser.add_argument("--output-name", default="DJ-Controller Bridge (B)", help="WinMM MIDI output name.")
     parser.add_argument("--bus", type=parse_int_auto, default=None, help="Optional USB bus filter.")
     parser.add_argument("--device", type=parse_int_auto, default=None, help="Optional USB device address filter.")
     parser.add_argument("--midi-endpoint", type=parse_int_auto, default=0x85, help="USB-MIDI endpoint.")

@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string] $TaskName = 'DJ Library OneTagger Spotify Retry',
+    [string] $TaskName = 'DJ Library AutoTagger Spotify Retry',
     [int] $IntervalMinutes = 120,
     [switch] $Apply,
     [switch] $Json
@@ -10,8 +10,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $repoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$retryScript = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'Invoke-OneTaggerSpotifyRetry.ps1'))
-$runtimeDir = Join-Path $repoRoot 'runtime\onetagger-spotify-retry'
+$retryScript = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'Invoke-AutoTaggerSpotifyRetry.ps1'))
+$runtimeDir = Join-Path $repoRoot 'runtime\AutoTagger-spotify-retry'
 New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
 
 if (-not (Test-Path -LiteralPath $retryScript -PathType Leaf)) {
@@ -47,7 +47,7 @@ $trigger = New-ScheduledTaskTrigger -Once -At ((Get-Date).AddMinutes(2)) -Repeti
 $settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Hours 8) -StartWhenAvailable -AllowStartIfOnBatteries:$false
 $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Limited
 
-Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal -Description 'Relance OneTagger Spotify pour compléter la couverture genres DJ Library après cooldown Spotify.' -Force | Out-Null
+Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal -Description 'Relance AutoTagger Spotify pour compléter la couverture genres DJ Library après cooldown Spotify.' -Force | Out-Null
 
 $task = Get-ScheduledTask -TaskName $TaskName
 $info = Get-ScheduledTaskInfo -TaskName $TaskName

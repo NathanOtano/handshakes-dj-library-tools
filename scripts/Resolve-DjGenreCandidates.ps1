@@ -2,7 +2,7 @@
 param(
     [string] $ConfigPath = (Join-Path $PSScriptRoot '..\config\dj-library.paths.json'),
     [string] $SourceConfigPath = (Join-Path $PSScriptRoot '..\config\dj-genre-resolver.sources.json'),
-    [string] $OnetaggerRunPath,
+    [string] $AutoTaggerRunPath,
     [string] $InputM3uPath,
     [ValidateSet('AllErrors', 'MissingExistingGenre', 'TrueUnresolvedMissingExistingGenre')]
     [string] $WorklistScope = 'AllErrors',
@@ -92,14 +92,14 @@ function Resolve-Tool {
     throw "$CommandName not found. Configure it in config/dj-library.paths.json or pass the explicit path."
 }
 
-function Resolve-LatestOneTaggerRun {
+function Resolve-LatestAutoTaggerRun {
     param([Parameter(Mandatory)] [string] $ReportsRoot)
-    $runs = Get-ChildItem -LiteralPath $ReportsRoot -Directory -Filter 'onetagger-run-*' -ErrorAction SilentlyContinue |
+    $runs = Get-ChildItem -LiteralPath $ReportsRoot -Directory -Filter 'AutoTagger-run-*' -ErrorAction SilentlyContinue |
         Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'derived-latest-state-by-path.csv') -PathType Leaf } |
         Sort-Object LastWriteTime -Descending
 
     if (@($runs).Count -eq 0) {
-        throw "No OneTagger derived run found under $ReportsRoot"
+        throw "No AutoTagger derived run found under $ReportsRoot"
     }
 
     return $runs[0].FullName
@@ -122,14 +122,14 @@ if ([string]::IsNullOrWhiteSpace($reportsRoot)) {
     $reportsRoot = Join-Path $repoRoot 'reports'
 }
 
-if ([string]::IsNullOrWhiteSpace($OnetaggerRunPath)) {
-    $OnetaggerRunPath = Resolve-LatestOneTaggerRun -ReportsRoot $reportsRoot
+if ([string]::IsNullOrWhiteSpace($AutoTaggerRunPath)) {
+    $AutoTaggerRunPath = Resolve-LatestAutoTaggerRun -ReportsRoot $reportsRoot
 }
-$onetaggerRunFullPath = Resolve-ConfiguredPath $OnetaggerRunPath
+$AutoTaggerRunFullPath = Resolve-ConfiguredPath $AutoTaggerRunPath
 $inputM3uFullPath = Resolve-ConfiguredPath $InputM3uPath
 
-if (-not (Test-Path -LiteralPath $onetaggerRunFullPath -PathType Container)) {
-    throw "OneTagger run not found: $onetaggerRunFullPath"
+if (-not (Test-Path -LiteralPath $AutoTaggerRunFullPath -PathType Container)) {
+    throw "AutoTagger run not found: $AutoTaggerRunFullPath"
 }
 if (-not [string]::IsNullOrWhiteSpace($inputM3uFullPath) -and -not (Test-Path -LiteralPath $inputM3uFullPath -PathType Leaf)) {
     throw "Input M3U not found: $inputM3uFullPath"
@@ -153,7 +153,7 @@ $arguments = @(
     '--repo-root', $repoRoot,
     '--config', $configFullPath,
     '--source-config', $sourceConfigFullPath,
-    '--onetagger-run', $onetaggerRunFullPath,
+    '--AutoTagger-run', $AutoTaggerRunFullPath,
     '--reports-root', $reportsRoot,
     '--runtime-root', $runtimeFullPath,
     '--mode', $Mode.ToLowerInvariant(),
@@ -194,7 +194,7 @@ $result = [pscustomobject]@{
     success = ($exit -eq 0 -and [bool] $parsed.success)
     generatedAt = (Get-Date).ToString('o')
     mode = $Mode
-    onetaggerRunPath = $onetaggerRunFullPath
+    AutoTaggerRunPath = $AutoTaggerRunFullPath
     reportsRoot = $reportsRoot
     runtimeRoot = $runtimeFullPath
     resolver = $parsed

@@ -124,9 +124,9 @@ function main() {
   }
   ensureDir(reportDir);
 
-  const settingsPath = path.join(process.env.APPDATA || "", "OneTagger", "OneTagger", "config", "settings.json");
-  const runsDir = path.join(process.env.APPDATA || "", "OneTagger", "OneTagger", "config", "runs");
-  const eventLog = path.join(reportDir, "onetagger-events.jsonl");
+  const settingsPath = path.join(process.env.APPDATA || "", "AutoTagger", "AutoTagger", "config", "settings.json");
+  const runsDir = path.join(process.env.APPDATA || "", "AutoTagger", "AutoTagger", "config", "runs");
+  const eventLog = path.join(reportDir, "AutoTagger-events.jsonl");
   const statusPath = path.join(reportDir, "live-status.json");
   const finalPath = path.join(reportDir, "final-summary.json");
   const mdPath = path.join(reportDir, "summary.md");
@@ -135,7 +135,7 @@ function main() {
   const profileName = settings.ui && settings.ui.autoTaggerProfile;
   const profiles = (settings.ui && settings.ui.autoTaggerProfiles) || [];
   const profile = profiles.find((p) => p.name === profileName) || profiles[0];
-  if (!profile || !profile.config) throw new Error("OneTagger active profile config not found.");
+  if (!profile || !profile.config) throw new Error("AutoTagger active profile config not found.");
 
   const config = clone(profile.config);
   config.path = targetPath;
@@ -169,7 +169,7 @@ function main() {
     strictness: config.strictness,
     threads: config.threads,
     targetAudioCount: countAudio(targetPath),
-    settingsPath: "<AppData OneTagger settings, not copied>",
+    settingsPath: "<AppData AutoTagger settings, not copied>",
     runsDir,
   };
   writeJson(path.join(reportDir, "preflight.json"), preflight);
@@ -289,11 +289,11 @@ function main() {
         failedFileCopy: failedCopy,
         successM3uCount: countM3u(successCopy),
         failedM3uCount: countM3u(failedCopy),
-        mutationWarning: "OneTagger may write audio tags. This coverage runner used overwrite=false unless explicitly changed.",
+        mutationWarning: "AutoTagger may write audio tags. This coverage runner used overwrite=false unless explicitly changed.",
       });
       writeJson(finalPath, final);
       fs.writeFileSync(mdPath, [
-        "# OneTagger coverage run summary",
+        "# AutoTagger coverage run summary",
         "",
         `- Run: ${path.basename(reportDir)}`,
         `- Target: ${targetPath}`,
@@ -303,14 +303,14 @@ function main() {
         `- Merge genres: ${config.mergeGenres}`,
         `- Started tagging: ${startedTaggingAt || ""}`,
         `- Finished: ${final.finishedAt}`,
-        `- Total reported by OneTagger: ${total}`,
+        `- Total reported by AutoTagger: ${total}`,
         `- Unique paths seen: ${unique.size}`,
         `- OK events: ${counts.ok}`,
         `- Error events: ${counts.error}`,
         `- Success M3U entries: ${final.successM3uCount}`,
         `- Failed M3U entries: ${final.failedM3uCount}`,
         "",
-        "Warning: OneTagger writes directly to audio tags. This run keeps overwrite=false by default.",
+        "Warning: AutoTagger writes directly to audio tags. This run keeps overwrite=false by default.",
       ].join("\n"), "utf8");
       updateStatus(true, { state: "done" });
       try { ws.close(); } catch {}

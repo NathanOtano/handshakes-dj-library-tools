@@ -3,7 +3,7 @@ param(
     [string] $TargetFolder = 'C:\DJ_Music\Processed_Library_Root\_ALL',
     [string] $RootFolder = 'C:\DJ_Music\Processed_Library_Root',
     [string] $ReportRoot = (Join-Path $PSScriptRoot '..\reports'),
-    [string] $RuntimeDir = (Join-Path $PSScriptRoot '..\runtime\onetagger-spotify-retry'),
+    [string] $RuntimeDir = (Join-Path $PSScriptRoot '..\runtime\AutoTagger-spotify-retry'),
     [int] $CooldownHours = 24,
     [int] $Threads = 1,
     [switch] $Apply,
@@ -34,7 +34,7 @@ function Append-Jsonl {
 
 function Get-RateLimitEvidence {
     param([Parameter(Mandatory)][string] $ReportRootPath)
-    $logs = Get-ChildItem -LiteralPath $ReportRootPath -Recurse -Filter 'onetagger-server.stdout.log' -ErrorAction SilentlyContinue |
+    $logs = Get-ChildItem -LiteralPath $ReportRootPath -Recurse -Filter 'AutoTagger-server.stdout.log' -ErrorAction SilentlyContinue |
         Sort-Object LastWriteTime -Descending
     foreach ($log in $logs) {
         $matches = Select-String -LiteralPath $log.FullName -Pattern 'Spotify rate limit hit, sleeping for: (\d+)s' -AllMatches -ErrorAction SilentlyContinue
@@ -97,18 +97,18 @@ try {
 }
 
 try {
-    $activeOneTagger = @(Get-Process onetagger -ErrorAction SilentlyContinue)
-    if ($activeOneTagger.Count -gt 0) {
+    $activeAutoTagger = @(Get-Process AutoTagger -ErrorAction SilentlyContinue)
+    if ($activeAutoTagger.Count -gt 0) {
         $decision.action = 'skip'
-        $decision.reason = 'onetagger-process-active'
-        $decision.activePids = @($activeOneTagger | Select-Object -ExpandProperty Id)
+        $decision.reason = 'AutoTagger-process-active'
+        $decision.activePids = @($activeAutoTagger | Select-Object -ExpandProperty Id)
         Write-JsonFile -Path $statePath -Value $decision
         Append-Jsonl -Path $eventsPath -Value $decision
         if ($Json) { $decision | ConvertTo-Json -Depth 12 } else { [pscustomobject]$decision }
         exit 0
     }
 
-    $coverage = & (Join-Path $PSScriptRoot 'Update-OneTaggerPlatformCoverage.ps1') -ReportRoot $reportRootFullPath -Label 'retry-preflight' -Json | ConvertFrom-Json
+    $coverage = & (Join-Path $PSScriptRoot 'Update-AutoTaggerPlatformCoverage.ps1') -ReportRoot $reportRootFullPath -Label 'retry-preflight' -Json | ConvertFrom-Json
     $decision.coverageSummary = $coverage.summaryJson
     $decision.spotify = $coverage.platforms.Spotify
     $decision.deezer = $coverage.platforms.Deezer
@@ -157,14 +157,14 @@ try {
     if (-not $Apply) {
         $decision.action = 'dry-run'
         $decision.reason = 'apply-not-set'
-        $decision.command = "pwsh -NoProfile -File .\scripts\Invoke-OneTaggerSpotifyRetry.ps1 -Apply -Json"
+        $decision.command = "pwsh -NoProfile -File .\scripts\Invoke-AutoTaggerSpotifyRetry.ps1 -Apply -Json"
         Write-JsonFile -Path $statePath -Value $decision
         Append-Jsonl -Path $eventsPath -Value $decision
         if ($Json) { $decision | ConvertTo-Json -Depth 12 } else { [pscustomobject]$decision }
         exit 0
     }
 
-    $launcherOutput = & (Join-Path $PSScriptRoot 'Start-OneTaggerCoverageRun.ps1') -TargetPath $selectedTarget -Platforms spotify -Threads $Threads -Json
+    $launcherOutput = & (Join-Path $PSScriptRoot 'Start-AutoTaggerCoverageRun.ps1') -TargetPath $selectedTarget -Platforms spotify -Threads $Threads -Json
     $launcher = $launcherOutput | ConvertFrom-Json
     $decision.action = 'started'
     $decision.reason = 'spotify-retry-launched'

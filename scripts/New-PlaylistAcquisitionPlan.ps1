@@ -126,7 +126,7 @@ $plan = [ordered]@{
         'Ignore Rekordbox tidal:tracks:* entries when checking local availability.',
         'Run Import-AuthorizedAudio.ps1 to copy them into ALL_TRACKS.',
         'Run Processed_Library_Root / Processed_Library_Root Notes.',
-        'Run OneTagger.',
+        'Run AutoTagger.',
         'Export local files from rekordbox to USB.'
     )
     blockedWorkflow = @(
@@ -159,7 +159,7 @@ Lot local de playlist : `$authorizedInboxPath`
 - suit la playlist comme reference de preparation ;
 - garde un CSV de tracks a completer ;
 - prepare le dossier de playlist ou deposer ou recuperer les fichiers locaux ;
-- donne les commandes d'import vers `ALL_TRACKS`, puis le flux Processed_Library_Root et OneTagger.
+- donne les commandes d'import vers `ALL_TRACKS`, puis le flux Processed_Library_Root et AutoTagger.
 
 ## Ce que ce plan ne fait pas
 

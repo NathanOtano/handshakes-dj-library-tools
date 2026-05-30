@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string] $DeviceNamePattern = 'XDJ-AERO',
+    [string] $DeviceNamePattern = 'DJ-Controller',
     [ValidateRange(1, 300)]
     [int] $Seconds = 20,
     [switch] $CloseRekordbox,

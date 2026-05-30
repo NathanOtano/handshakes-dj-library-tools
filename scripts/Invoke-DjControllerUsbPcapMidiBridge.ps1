@@ -14,7 +14,7 @@ param(
 
     [string] $MidiEndpoint = '0x85',
 
-    [string] $OutputName = 'XDJ-AERO Bridge (B)',
+    [string] $OutputName = 'DJ-Controller Bridge (B)',
 
     [int] $DurationSeconds = 0,
 
@@ -30,7 +30,7 @@ $ErrorActionPreference = 'Stop'
 
 $repoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $reportsRoot = Join-Path $repoRoot 'reports'
-$bridgeScript = Join-Path $PSScriptRoot 'xdj_aero_usbpcap_midi_bridge.py'
+$bridgeScript = Join-Path $PSScriptRoot 'dj_controller_usbpcap_midi_bridge.py'
 $usbPcap = 'C:\Program Files\USBPcap\USBPcapCMD.exe'
 
 if (-not (Test-Path -LiteralPath $bridgeScript -PathType Leaf)) {
@@ -106,7 +106,7 @@ try {
     $exitCode = $LASTEXITCODE
     if ($exitCode -ne 0) {
         $outputText = ($output | ForEach-Object { [string] $_ }) -join [Environment]::NewLine
-        throw "XDJ-AERO USBPcap MIDI bridge failed with exit code $exitCode.$([Environment]::NewLine)$outputText"
+        throw "DJ-Controller USBPcap MIDI bridge failed with exit code $exitCode.$([Environment]::NewLine)$outputText"
     }
 
     if ($Json) {

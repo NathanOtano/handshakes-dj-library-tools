@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string] $SourcePath,
-    [string] $TargetDeviceName = 'PIONEER XDJ-AERO MIDI',
+    [string] $TargetDeviceName = 'PIONEER DJ-Controller MIDI',
     [string] $TargetPath = (Join-Path $env:APPDATA "Pioneer\rekordbox6\MidiMappings\$TargetDeviceName.midi.csv"),
     [switch] $Apply,
     [switch] $CloseRekordbox,
@@ -13,7 +13,7 @@ $ErrorActionPreference = 'Stop'
 
 function Resolve-FactoryMapping {
     $installRoot = 'C:\Program Files\rekordbox'
-    $relative = 'MidiMappings\PIONEER XDJ-AERO MIDI.midi.csv'
+    $relative = 'MidiMappings\PIONEER DJ-Controller MIDI.midi.csv'
 
     if (-not (Test-Path -LiteralPath $installRoot -PathType Container)) {
         return $null
@@ -41,7 +41,7 @@ if ([string]::IsNullOrWhiteSpace($SourcePath)) {
 }
 
 if ([string]::IsNullOrWhiteSpace($SourcePath)) {
-    throw 'Factory XDJ-AERO MIDI mapping not found under C:\Program Files\rekordbox.'
+    throw 'Factory DJ-Controller MIDI mapping not found under C:\Program Files\rekordbox.'
 }
 
 $sourceFullPath = [System.IO.Path]::GetFullPath($SourcePath)

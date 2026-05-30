@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extract XDJ-AERO USB-MIDI packets from a USBPcap .pcap file."""
+"""Extract DJ-Controller USB-MIDI packets from a USBPcap .pcap file."""
 
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ STATUS_NAMES = {
     0xE0: "pitch_bend",
 }
 
-# Subset from the official XDJ-AERO MIDI message list. Deck A is channel 1,
+# Subset from the official DJ-Controller MIDI message list. Deck A is channel 1,
 # Deck B channel 2, Deck C channel 3, Deck D channel 4, effects A/C channel 5,
 # effects B/D channel 6, and mixer controls channel 7.
 NOTE_NAMES = {
@@ -459,7 +459,7 @@ def build_report(args: argparse.Namespace) -> dict[str, object]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Extract XDJ-AERO USB-MIDI event packets from a USBPcap .pcap capture."
+        description="Extract DJ-Controller USB-MIDI event packets from a USBPcap .pcap capture."
     )
     parser.add_argument("--input", required=True, help="USBPcap .pcap file to read.")
     parser.add_argument("--output-dir", default="reports", help="Directory for CSV/JSON reports.")
@@ -478,7 +478,7 @@ def main() -> int:
         help="USB HID input endpoint for optional raw report export. Default: 0x87.",
     )
     parser.add_argument("--include-hid", action="store_true", help="Also export raw HID report rows.")
-    parser.add_argument("--prefix", default="xdj-aero-usbpcap", help="Output filename prefix.")
+    parser.add_argument("--prefix", default="DJ-Controller-usbpcap", help="Output filename prefix.")
     args = parser.parse_args()
 
     summary = build_report(args)

@@ -15,7 +15,7 @@ $reportsRoot = Join-Path $repoRoot 'reports'
 
 if ([string]::IsNullOrWhiteSpace($OutputPath)) {
     $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-    $OutputPath = Join-Path $reportsRoot "xdj-aero-wifi-diagnostics-$stamp.json"
+    $OutputPath = Join-Path $reportsRoot "DJ-Controller-wifi-diagnostics-$stamp.json"
 }
 
 $outputFullPath = [System.IO.Path]::GetFullPath($OutputPath)
@@ -178,7 +178,7 @@ if ($networkProfile.PSObject.Properties.Name -contains 'NetworkCategory') {
 }
 
 $report = [pscustomobject]@{
-    schema = 'dj-library.xdj-aero.wifi-diagnostics.v1'
+    schema = 'dj-library.DJ-Controller.wifi-diagnostics.v1'
     generatedAt = (Get-Date).ToString('o')
     mutationPolicy = 'read-only; writes this diagnostics report only'
     repoRoot = $repoRoot
@@ -214,8 +214,8 @@ $report = [pscustomobject]@{
     wlanInterfacesRaw = $wlanInterfacesRaw
     wlanNetworksRaw = $wlanNetworksRaw
     interpretation = [pscustomobject]@{
-        ifSsidInvisible = 'Put the XDJ-AERO in ACCESS POINT(AP) mode, keep wireless LAN enabled, then rescan.'
-        ifNoExpectedIp = 'Enable the XDJ-AERO DHCP server or reconnect to the AERO SSID; expected client IP is usually 192.168.1.x.'
+        ifSsidInvisible = 'Put the DJ-Controller in ACCESS POINT(AP) mode, keep wireless LAN enabled, then rescan.'
+        ifNoExpectedIp = 'Enable the DJ-Controller DHCP server or reconnect to the AERO SSID; expected client IP is usually 192.168.1.x.'
         ifGatewayUnreachable = 'Check that the AERO WLAN INFO IP address is 192.168.1.1 and that Windows is connected to the AERO SSID.'
         ifSameSubnetConflict = 'Another adapter is also on 192.168.1.x. Temporarily disconnect that adapter or move the AERO AP to another subnet before testing LINK.'
         ifLinkMissing = 'Use rekordbox EXPORT mode, press the blue rekordbox button on the AERO, then click LINK in rekordbox. Public firewall profile or unsupported rekordbox version can still block discovery.'

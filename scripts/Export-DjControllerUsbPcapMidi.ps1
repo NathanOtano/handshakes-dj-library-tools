@@ -31,7 +31,7 @@ if (-not (Test-Path -LiteralPath $inputFullPath -PathType Leaf)) {
     throw "USBPcap input file not found: $inputFullPath"
 }
 
-$scriptPath = Join-Path $PSScriptRoot 'xdj_aero_usbpcap_extract.py'
+$scriptPath = Join-Path $PSScriptRoot 'dj_controller_usbpcap_extract.py'
 if (-not (Test-Path -LiteralPath $scriptPath -PathType Leaf)) {
     throw "Extractor script not found: $scriptPath"
 }
@@ -69,7 +69,7 @@ $output = & $pythonExe @arguments 2>&1
 $exitCode = $LASTEXITCODE
 if ($exitCode -ne 0) {
     $outputText = ($output | ForEach-Object { [string] $_ }) -join [Environment]::NewLine
-    throw "XDJ-AERO USBPcap extraction failed with exit code $exitCode.$([Environment]::NewLine)$outputText"
+    throw "DJ-Controller USBPcap extraction failed with exit code $exitCode.$([Environment]::NewLine)$outputText"
 }
 
 if ($Json) {

@@ -13,7 +13,7 @@ $reportsRoot = Join-Path $repoRoot 'reports'
 
 if ([string]::IsNullOrWhiteSpace($OutputPath)) {
     $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-    $OutputPath = Join-Path $reportsRoot "xdj-aero-windows11-diagnostics-$stamp.json"
+    $OutputPath = Join-Path $reportsRoot "DJ-Controller-windows11-diagnostics-$stamp.json"
 }
 
 $outputFullPath = [System.IO.Path]::GetFullPath($OutputPath)
@@ -144,7 +144,7 @@ $driverStoreMatches = @(Get-ChildItem -LiteralPath 'C:\Windows\System32\DriverSt
 
 $publishedInfMatches = @(Get-ChildItem -LiteralPath 'C:\Windows\INF' -Filter 'oem*.inf' -File -ErrorAction SilentlyContinue |
     ForEach-Object {
-        $matches = @(Select-String -LiteralPath $_.FullName -Pattern 'VID_08E4&PID_0172|PIONEER XDJ-AERO|XDJ-AEROAudio64|DriverVer=07/09/2018,1.300.0.0' -ErrorAction SilentlyContinue)
+        $matches = @(Select-String -LiteralPath $_.FullName -Pattern 'VID_08E4&PID_0172|PIONEER DJ-Controller|DJ-ControllerAudio64|DriverVer=07/09/2018,1.300.0.0' -ErrorAction SilentlyContinue)
         if ($matches.Count -gt 0) {
             [pscustomobject]@{
                 name = $_.Name
@@ -156,7 +156,7 @@ $publishedInfMatches = @(Get-ChildItem -LiteralPath 'C:\Windows\INF' -Filter 'oe
     } |
     Sort-Object Name)
 
-$driverService = Invoke-TextCommand -FilePath 'sc.exe' -ArgumentList @('query', 'XDJ-AEROAudio')
+$driverService = Invoke-TextCommand -FilePath 'sc.exe' -ArgumentList @('query', 'DJ-ControllerAudio')
 $midiServices = @(Get-Service -ErrorAction SilentlyContinue |
     Where-Object { ($_.Name -match 'midi') -or ($_.DisplayName -match 'midi') } |
     Sort-Object Name |
@@ -169,7 +169,7 @@ $observedXdjWithProblem = @($matchingDevices | Where-Object {
 }).Count -gt 0
 
 $report = [pscustomobject]@{
-    schema = 'dj-library.xdj-aero.windows-diagnostics.v1'
+    schema = 'dj-library.DJ-Controller.windows-diagnostics.v1'
     generatedAt = (Get-Date).ToString('o')
     mutationPolicy = 'read-only; writes this diagnostics report only'
     repoRoot = $repoRoot
@@ -188,7 +188,7 @@ $report = [pscustomobject]@{
     driverService = $driverService
     publishedInfMatches = $publishedInfMatches
     interpretation = [pscustomobject]@{
-        ifXdjAbsent = 'Connect the XDJ-AERO by USB, put it in PC/MIDI control mode, then rerun this script.'
+        ifXdjAbsent = 'Connect the DJ-Controller by USB, put it in PC/MIDI control mode, then rerun this script.'
         ifCode43OrUnsigned = 'Treat as driver binding/signature problem before writing any custom driver.'
         ifMidiSeenButDead = 'Check Windows MIDI Services and the target DJ app mapping before kernel-driver work.'
         ifOnlyAudioInterfaceSeen = 'Capture the other USB interfaces with USBPcap/Wireshark before deciding on HID or UMDF.'

@@ -101,7 +101,7 @@ $job = [ordered]@{
         'Keep tiddl output flat: one playlist folder, then Artist - Title files at the folder root.',
         'Ignore Rekordbox tidal:tracks:* entries when checking local availability.',
         'Run Processed_Library_Root / Processed_Library_Root Notes after local import when applicable.',
-        'Run OneTagger for genre and metadata cleanup.'
+        'Run AutoTagger for genre and metadata cleanup.'
     )
 }
 

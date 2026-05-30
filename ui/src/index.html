@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DJ Library Manager</title>
+    <script type="module" src="main.js" defer></script>
+  </head>
+
+  <body>
+    <main class="container">
+      <h1>DJ Library Tools</h1>
+
+      <div class="row">
+        <div class="card">
+          <h2>Library Audit</h2>
+          <p>Scan your library for duplicates and orphaned files.</p>
+          <button type="button" id="btn-audit">Run Audit</button>
+        </div>
+        
+        <div class="card">
+          <h2>Add Processed Audio</h2>
+          <p>Add new processed audio files to Rekordbox.</p>
+          <button type="button" id="btn-add">Add Files</button>
+        </div>
+      </div>
+
+      <div class="logs">
+        <h3>Console Output</h3>
+        <pre id="log-output">Ready...</pre>
+      </div>
+    </main>
+  </body>
+</html>

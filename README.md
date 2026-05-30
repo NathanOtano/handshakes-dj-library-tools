@@ -30,9 +30,22 @@ Most scripts take arguments like `-MusicRoot` or `--music-root`. Alternatively, 
 - **`scripts/`**: Contains all the automation logic.
   - `.ps1` files: Main entry points and task runners.
   - `.py` files: Core logic, database interactions, and metadata processing.
-  - `.js` files: Scripts for integrations like OneTagger.
+  - `.js` files: Scripts for integrations like AutoTagger.
+- **`ui/`**: A modern Tauri frontend providing a simple visual interface to run scripts.
 
-## Usage Examples
+## Usage (Graphical Interface)
+
+You can use the provided graphical interface (Tauri) to run scripts without the command line.
+1. **Install Rust**: You must install [Rust](https://rustup.rs/) to compile the UI.
+2. **Install Node.js**: Required to install frontend dependencies.
+3. **Run the UI**:
+   ```powershell
+   cd ui
+   npm install
+   npm run tauri dev
+   ```
+
+## Usage Examples (Command Line)
 
 Most tools are designed to have a "Dry-run" or "Plan" mode first.
 
@@ -64,5 +77,5 @@ Users are responsible for ensuring that their use of these scripts complies with
 **3. Trademarks & Affiliation**
 - **Rekordbox** and **Pioneer DJ** are trademarks of AlphaTheta Corporation.
 - **Serato** is a trademark of Serato Limited.
-- **Spotify**, **TIDAL**, **Audio Processor**, and **OneTagger** are trademarks of their respective owners.
+- **Spotify**, **TIDAL**, **Audio Processor**, and **AutoTagger** are trademarks of their respective owners.
 - This project is **100% unofficial and independent**. It is not affiliated with, sponsored by, or endorsed by AlphaTheta, Pioneer DJ, Serato, or any other mentioned brand. All trademarks belong to their respective owners.

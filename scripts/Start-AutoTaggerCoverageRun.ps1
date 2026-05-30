@@ -18,7 +18,7 @@ $ErrorActionPreference = 'Stop'
 function Resolve-NodeRuntime {
     $node = Get-Command node -ErrorAction SilentlyContinue
     if ($null -eq $node) {
-        throw 'node is required for the OneTagger coverage runner.'
+        throw 'node is required for the AutoTagger coverage runner.'
     }
     return $node.Source
 }
@@ -35,7 +35,7 @@ function Resolve-ConfiguredPath {
     return [System.IO.Path]::GetFullPath((Join-Path $repoRoot $Path))
 }
 
-function Wait-OneTaggerWsUrl {
+function Wait-AutoTaggerWsUrl {
     param(
         [Parameter(Mandatory)][string] $StdoutPath,
         [int] $TimeoutSeconds = 45
@@ -50,7 +50,7 @@ function Wait-OneTaggerWsUrl {
         }
         Start-Sleep -Milliseconds 500
     }
-    throw "OneTagger server did not expose a WebSocket URL within $TimeoutSeconds seconds. See $StdoutPath"
+    throw "AutoTagger server did not expose a WebSocket URL within $TimeoutSeconds seconds. See $StdoutPath"
 }
 
 function New-StopScript {
@@ -89,7 +89,7 @@ $repoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $configFullPath = Resolve-ConfiguredPath $ConfigPath
 $targetFullPath = Resolve-ConfiguredPath $TargetPath
 $reportRootFullPath = Resolve-ConfiguredPath $ReportRoot
-$runnerPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'onetagger_coverage_runner.js'))
+$runnerPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'AutoTagger_coverage_runner.js'))
 
 if (-not (Test-Path -LiteralPath $configFullPath -PathType Leaf)) {
     throw "Config not found: $configFullPath"
@@ -102,9 +102,9 @@ if (-not (Test-Path -LiteralPath $runnerPath -PathType Leaf)) {
 }
 
 $config = Get-Content -LiteralPath $configFullPath -Raw -Encoding UTF8 | ConvertFrom-Json
-$oneTaggerPath = Resolve-ConfiguredPath $config.toolHints.oneTagger.configuredPath
-if (-not (Test-Path -LiteralPath $oneTaggerPath -PathType Leaf)) {
-    throw "OneTagger not found: $oneTaggerPath"
+$AutoTaggerPath = Resolve-ConfiguredPath $config.toolHints.AutoTagger.configuredPath
+if (-not (Test-Path -LiteralPath $AutoTaggerPath -PathType Leaf)) {
+    throw "AutoTagger not found: $AutoTaggerPath"
 }
 
 $nodePath = Resolve-NodeRuntime
@@ -113,14 +113,14 @@ $safePlatforms = ($Platforms | ForEach-Object { $_.Trim().ToLowerInvariant() } |
 if ([string]::IsNullOrWhiteSpace($safePlatforms)) {
     throw 'At least one platform is required.'
 }
-$reportDir = Join-Path $reportRootFullPath "onetagger-coverage-$timestamp-$safePlatforms"
+$reportDir = Join-Path $reportRootFullPath "AutoTagger-coverage-$timestamp-$safePlatforms"
 New-Item -ItemType Directory -Path $reportDir -Force | Out-Null
 
-$serverStdout = Join-Path $reportDir 'onetagger-server.stdout.log'
-$serverStderr = Join-Path $reportDir 'onetagger-server.stderr.log'
+$serverStdout = Join-Path $reportDir 'AutoTagger-server.stdout.log'
+$serverStderr = Join-Path $reportDir 'AutoTagger-server.stderr.log'
 $serverArgs = Join-ProcessArguments @('--server', '--path', $targetFullPath)
-$server = Start-Process -FilePath $oneTaggerPath -ArgumentList $serverArgs -WindowStyle Hidden -RedirectStandardOutput $serverStdout -RedirectStandardError $serverStderr -PassThru
-$wsUrl = Wait-OneTaggerWsUrl -StdoutPath $serverStdout
+$server = Start-Process -FilePath $AutoTaggerPath -ArgumentList $serverArgs -WindowStyle Hidden -RedirectStandardOutput $serverStdout -RedirectStandardError $serverStderr -PassThru
+$wsUrl = Wait-AutoTaggerWsUrl -StdoutPath $serverStdout
 
 $runnerStdout = Join-Path $reportDir 'runner.stdout.log'
 $runnerStderr = Join-Path $reportDir 'runner.stderr.log'
