@@ -37,7 +37,18 @@ Most scripts take arguments like `-MusicRoot` or `--music-root`. Alternatively, 
 
 ## Usage (Graphical Interface)
 
-You can use the provided graphical interface (Tauri) to run scripts without the command line.
+![Handshakes DJ Library Tools UI](docs/screenshot.png)
+
+You can use the provided graphical interface to run scripts without the command line.
+
+### For Non-Coders (Install via Download)
+
+1. Go to the [Releases page](https://github.com/NathanOtano/handshakes-dj-library-tools/releases) on GitHub.
+2. Download the latest `HandshakesDJLibraryTools_x.x.x_x64_en-US.msi` file.
+3. Run the installer and open the application from your Start Menu.
+
+### For Developers (Run Locally)
+
 1. **Install Rust**: You must install [Rust](https://rustup.rs/) to compile the UI.
 2. **Install Node.js**: Required to install frontend dependencies.
 3. **Run the UI**:
