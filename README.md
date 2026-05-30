@@ -4,7 +4,7 @@ This repository contains a collection of PowerShell and Python scripts designed 
 
 These scripts help in:
 - **Library Auditing**: Finding exact audio duplicates, chromaprint (acoustic) overlap, and orphaned metadata.
-- **Metadata Management**: Normalizing tags, adding missing files to Rekordbox, and cleaning up filenames (e.g., removing `_pn` suffixes after using Platinum Notes).
+- **Metadata Management**: Normalizing tags, adding missing files to Rekordbox, and cleaning up filenames (e.g., removing `_processed` suffixes after using Audio Processor).
 - **Synchronization**: Syncing smart playlists, relinking mounted drive paths, and matching your local library against streaming platform availability (e.g., TIDAL, Spotify).
 - **Quality Control**: Measuring audio quality and verifying readiness of your tracks.
 
@@ -21,7 +21,7 @@ Most scripts take arguments like `-MusicRoot` or `--music-root`. Alternatively, 
 
 **Default Path Placeholders used in these scripts:**
 - `C:\DJ_Music`: The root directory of your DJ library.
-- `C:\DJ_Music\Processed_Library_Root`: The directory containing tracks processed by tools like Platinum Notes.
+- `C:\DJ_Music\Processed_Library_Root`: The directory containing tracks processed by tools like Audio Processor.
 - `C:\DJ_Music\Playlists\ALL_TRACKS`: The directory containing your main playlist exports.
 - `C:\DJ_Music\_DUPLICATE_QUARANTINE`: Where duplicates are moved.
 
@@ -43,7 +43,7 @@ pwsh -NoProfile -File .\scripts\Audit-DjLibraryCleanup.ps1 -AudioRoot "C:\DJ_Mus
 
 **Add newly processed files to Rekordbox:**
 ```powershell
-pwsh -NoProfile -File .\scripts\Add-RekordboxPlatinumContent.ps1 -Mode Plan -DuplicateCsv reports\local-duplicate-candidates.csv
+pwsh -NoProfile -File .\scripts\Add-RekordboxProcessedContent.ps1 -Mode Plan -DuplicateCsv reports\local-duplicate-candidates.csv
 ```
 
 > **Warning**: Modifying the Rekordbox `master.db` directly carries risks. Always ensure Rekordbox is closed and you have backups before running scripts with `-Apply` flags.
@@ -64,5 +64,5 @@ Users are responsible for ensuring that their use of these scripts complies with
 **3. Trademarks & Affiliation**
 - **Rekordbox** and **Pioneer DJ** are trademarks of AlphaTheta Corporation.
 - **Serato** is a trademark of Serato Limited.
-- **Spotify**, **TIDAL**, **Platinum Notes**, and **OneTagger** are trademarks of their respective owners.
+- **Spotify**, **TIDAL**, **Audio Processor**, and **OneTagger** are trademarks of their respective owners.
 - This project is **100% unofficial and independent**. It is not affiliated with, sponsored by, or endorsed by AlphaTheta, Pioneer DJ, Serato, or any other mentioned brand. All trademarks belong to their respective owners.

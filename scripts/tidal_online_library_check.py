@@ -94,7 +94,7 @@ def artist_tokens(value: str) -> frozenset[str]:
 
 
 def split_local_stem(stem: str) -> tuple[str, str]:
-    clean = re.sub(r"_pn$", "", stem, flags=re.I).strip()
+    clean = re.sub(r"_processed$", "", stem, flags=re.I).strip()
     if " - " in clean:
         artist, title = clean.split(" - ", 1)
         return artist.strip(), title.strip()

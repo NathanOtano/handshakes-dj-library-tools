@@ -22,7 +22,7 @@ $ErrorActionPreference = 'Stop'
 
 $repoRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $runtimeFullPath = [System.IO.Path]::GetFullPath($RuntimeRoot)
-$helperPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'rekordbox_add_processed_library_root_content.py'))
+$helperPath = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'rekordbox_add_processed_content.py'))
 $masterPath = [System.IO.Path]::GetFullPath((Join-Path $RekordboxRoot 'master.db'))
 $timestamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 
@@ -173,7 +173,7 @@ function Invoke-AddHelper {
     $payload = $raw | Out-String
     $parsed = $payload | ConvertFrom-Json
     if ($exit -ne 0) {
-        throw "rekordbox_add_processed_library_root_content.py failed: $payload"
+        throw "rekordbox_add_processed_content.py failed: $payload"
     }
     return $parsed
 }

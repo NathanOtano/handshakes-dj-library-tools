@@ -2,7 +2,7 @@
 """Repair Rekordbox rows so Processed_Library_Root files and collection rows line up.
 
 The helper is dry-run by default. With --apply it only mutates Rekordbox rows:
-missing *_pn rows are relinked to the matching existing Processed_Library_Root file when the
+missing *_processed rows are relinked to the matching existing Processed_Library_Root file when the
 match is unambiguous, duplicate content rows for the same path are merged, and
 playlist/history/tag links are repointed to the preserved content row.
 """

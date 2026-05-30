@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Remove trailing _pn particles from Processed_Library_Root filenames and Rekordbox paths.
+"""Remove trailing _processed particles from Processed_Library_Root filenames and Rekordbox paths.
 
 Dry-run is the default. With --apply-files it renames disk files under the
 source root. With --apply-db it updates Rekordbox content paths to the renamed
