@@ -1,0 +1,184 @@
+{
+  "$schema": "../schemas/dj-genre-taxonomy.schema.json",
+  "version": "0.1.0",
+  "playlistRoots": {
+    "djBuckets": "DJ Bacs",
+    "musicologicalGenres": "Genres",
+    "subgenres": "Sous-genres",
+    "audit": "Audit"
+  },
+  "defaults": {
+    "subgenreMinTracks": 12,
+    "sort": "bpm_only",
+    "preserveOriginalGenreTags": true,
+    "materializeAsNormalPlaylists": true
+  },
+  "djBuckets": [
+    {
+      "name": "House / Disco / Dance",
+      "aliases": ["house", "dance", "dance pop", "club", "disco"],
+      "description": "Club accessible, house, disco, indie dance et dancefloor."
+    },
+    {
+      "name": "Deep / Melodic / Hypnotic",
+      "aliases": ["deep", "melodic", "hypnotic", "dub techno", "organic", "downtempo club"],
+      "description": "Morceaux profonds, progressifs, dubby, late-night ou warm-up."
+    },
+    {
+      "name": "Techno / Rave / Trance",
+      "aliases": ["techno", "rave", "trance", "tekno", "gabber", "hardcore techno"],
+      "description": "Tension club, warehouse, rave, techno et trance."
+    },
+    {
+      "name": "Breaks / Bass / Garage / Jungle",
+      "aliases": ["electro", "break", "breaks", "breakbeat", "big beat", "garage", "uk garage", "2-step", "bassline", "uk funky", "alternative dance", "bass music", "uk bass", "dubstep", "future bass", "miami bass", "jungle", "drum and bass", "dnb", "liquid funk", "footwork", "juke", "halftime", "breakcore"],
+      "description": "Grand bac transversal pour tout ce qui est rythme casse, UK, bass, sub, garage, jungle ou DnB."
+    },
+    {
+      "name": "EBM / Wave / Dark",
+      "aliases": ["ebm", "industrial", "wave", "post-punk", "darkwave", "cold wave", "minimal synth", "dark disco", "deathrock", "gothic rock", "synthpop", "synthwave"],
+      "description": "Corps sombre, wave, EBM, post-punk, industriel et dark disco."
+    },
+    {
+      "name": "Funky / Groove / Soul / Jazz",
+      "aliases": ["funk", "funky", "groove", "soul", "soul funk", "soul and funk", "jazz", "broken beat", "rare groove", "classic soul", "soul jazz"],
+      "description": "Groove, bounce, organique, funk, soul, jazz et broken beat."
+    },
+    {
+      "name": "Rap / R&B / Club Urbain",
+      "aliases": ["rap", "hip-hop", "hip hop", "hip-hop-rap", "hiphop", "rap and hip-hop", "r&b", "rnb", "r-b-soul", "trap", "grime", "urbano", "old school hip hop", "east coast hip hop", "west coast hip hop", "crunk", "southern hip hop", "uk drill"],
+      "description": "Rap, R&B, trap, grime, club urbain et croisements latins urbains."
+    },
+    {
+      "name": "Pop / Rock / Indie",
+      "aliases": ["pop", "french pop", "pop internationale", "rock", "rock inde", "indie", "indie pop", "pop inde", "french indie pop", "alternative", "alternative pop", "punk", "queercore", "shoegaze", "chanson", "britpop", "madchester", "folk", "neo-psychedelic", "psychedelic"],
+      "description": "Pop, rock, indie, alternative et formats chanson compatibles set."
+    },
+    {
+      "name": "Heat / Global / Latin / Afro / Reggae",
+      "aliases": ["heat", "global", "world", "latin", "latin electronic", "afro", "afrobeats", "afrobeat", "musique africaine", "reggae", "dancehall", "reggae and dancehall", "reggaeton", "cumbia", "salsa"],
+      "description": "Bac efficace, solaire, global, latin, afro, reggae, dancehall et party."
+    },
+    {
+      "name": "Ambient / Experimental / Soundtrack / Tools",
+      "aliases": ["ambient", "experimental", "experimental electronic", "leftfield", "idm", "soundtrack", "ost", "films", "vgm", "vgm soundtrack", "anime", "anime soundtrack", "tool", "tools", "sample", "samples", "spoken word", "interlude", "comedy"],
+      "description": "Atmospheres, outils, intros, curiosites, experimental, BO, VGM et samples."
+    }
+  ],
+  "djSubBuckets": [
+    {
+      "name": "Electro Breaks",
+      "parent": "Breaks / Bass / Garage / Jungle",
+      "aliases": ["electro", "electroclash", "electro house", "alternative dance", "big beat"],
+      "description": "Versant electro/club du break : mecanique, club, compatible house/techno."
+    },
+    {
+      "name": "Breakbeat / Bass Club",
+      "parent": "Breaks / Bass / Garage / Jungle",
+      "aliases": ["break", "breaks", "breakbeat", "breakbeats", "bass house", "miami bass", "future bass"],
+      "description": "Bac pont break/bass club : ni pure electro, ni UK garage pur, ni jungle/DnB."
+    },
+    {
+      "name": "UK Garage / Bass",
+      "parent": "Breaks / Bass / Garage / Jungle",
+      "aliases": ["uk garage", "ukg", "2-step", "2 step", "speed garage", "bassline", "uk funky", "uk bass", "bass music"],
+      "description": "Bac pont UK club, garage, 2-step, bassline, UK funky et bass music moderee."
+    },
+    {
+      "name": "Jungle / DnB / Soundsystem",
+      "parent": "Breaks / Bass / Garage / Jungle",
+      "aliases": ["jungle", "drum and bass", "drum & bass", "dnb", "d&b", "liquid funk", "dubstep", "halftime", "footwork", "juke", "breakcore", "drumstep"],
+      "description": "Versant soundsystem, sub, jungle, drum & bass, dubstep, footwork et breakcore."
+    }
+  ],
+  "strictGenres": [
+    {"name": "House", "djBuckets": ["House / Disco / Dance"], "aliases": ["house", "progressive house", "melodic house and techno", "jazz house", "g-house", "chicago house", "funky house"]},
+    {"name": "Disco", "djBuckets": ["House / Disco / Dance", "Funky / Groove / Soul / Jazz"], "aliases": ["disco", "boogie", "italo dance", "disco house", "hi-nrg", "hi nrg"]},
+    {"name": "Techno", "djBuckets": ["Techno / Rave / Trance"], "aliases": ["techno", "minimal", "detroit", "driving"]},
+    {"name": "Trance / Rave", "djBuckets": ["Techno / Rave / Trance"], "aliases": ["trance", "rave", "tekno", "new rave", "eurodance", "euro-trance", "gabber", "hardcore techno"]},
+    {"name": "Electro", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["electro"]},
+    {"name": "Breaks", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["break", "breaks", "breakbeat", "big beat", "alternative dance"]},
+    {"name": "Garage / UK Bass", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["garage", "uk garage", "2-step", "bassline", "uk funky", "uk bass", "bass music", "future bass", "miami bass"]},
+    {"name": "Bass / Soundsystem", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["dubstep", "halftime", "footwork", "juke", "drumstep"]},
+    {"name": "Jungle / DnB", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["jungle", "drum and bass", "drum & bass", "dnb", "liquid funk", "breakcore"]},
+    {"name": "EBM / Industrial", "djBuckets": ["EBM / Wave / Dark"], "aliases": ["ebm", "industrial", "post-industrial"]},
+    {"name": "Wave / Post-punk", "djBuckets": ["EBM / Wave / Dark", "Pop / Rock / Indie"], "aliases": ["wave", "new wave", "cold wave", "darkwave", "post-punk", "minimal synth", "deathrock", "gothic rock", "synthpop", "synthwave"]},
+    {"name": "Rap / Hip-Hop", "djBuckets": ["Rap / R&B / Club Urbain"], "aliases": ["rap", "hip-hop", "hip hop", "hip-hop-rap", "grime", "old school hip hop", "east coast hip hop", "west coast hip hop"]},
+    {"name": "R&B", "djBuckets": ["Rap / R&B / Club Urbain", "Funky / Groove / Soul / Jazz"], "aliases": ["r&b", "rnb", "r-b-soul", "rhythm and blues", "french r&b"]},
+    {"name": "Funk / Soul", "djBuckets": ["Funky / Groove / Soul / Jazz"], "aliases": ["funk", "funky", "soul", "soul funk", "soul and funk", "classic soul", "motown", "rare groove", "soul jazz", "boogie"]},
+    {"name": "Jazz / Broken Beat", "djBuckets": ["Funky / Groove / Soul / Jazz"], "aliases": ["jazz", "jazz funk", "acid jazz", "nu jazz", "broken beat", "vocal jazz", "latin jazz", "hard bop", "cool jazz", "jazz fusion", "jazz blues", "jazz ballads", "bebop", "blues", "french jazz"]},
+    {"name": "Pop", "djBuckets": ["Pop / Rock / Indie"], "aliases": ["pop", "french pop", "pop internationale", "pop rock", "indie pop", "pop inde", "french indie pop", "alternative pop", "art pop", "chanson", "variete francaise", "french"]},
+    {"name": "Rock / Indie", "djBuckets": ["Pop / Rock / Indie"], "aliases": ["rock", "rock inde", "indie", "alternative", "punk", "queercore", "shoegaze", "britpop", "madchester", "folk", "neo-psychedelic", "psychedelic", "noise rock", "proto-punk", "art rock", "stoner rock", "blues rock", "funk rock", "rockabilly", "rock and roll", "anatolian rock"]},
+    {"name": "Reggae / Dub / Dancehall", "djBuckets": ["Heat / Global / Latin / Afro / Reggae"], "aliases": ["reggae", "dub", "dancehall", "reggae and dancehall", "ska", "rocksteady", "ragga", "lovers rock"]},
+    {"name": "Latin / Afro / World", "djBuckets": ["Heat / Global / Latin / Afro / Reggae"], "aliases": ["latin", "latin electronic", "latin club", "latino", "reggaeton", "salsa", "cumbia", "afro", "afrobeat", "afrobeats", "african", "musique africaine", "musique bresilienne", "highlife", "mizrahi", "karadeniz folk", "world", "global"]},
+    {"name": "Ambient / Experimental", "djBuckets": ["Ambient / Experimental / Soundtrack / Tools", "Deep / Melodic / Hypnotic"], "aliases": ["ambient", "experimental", "experimental electronic", "leftfield", "idm", "downtempo", "trip hop", "glitch", "lounge", "electronic superhighway"]},
+    {"name": "Soundtrack / VGM / Tools", "djBuckets": ["Ambient / Experimental / Soundtrack / Tools"], "aliases": ["soundtrack", "ost", "score", "films", "vgm", "vgm soundtrack", "video game music", "anime", "anime soundtrack", "tool", "tools", "sample", "samples", "spoken word", "interlude", "comedy"]}
+  ],
+  "subgenres": [
+    {"name": "Acid House", "parent": "House", "djBuckets": ["House / Disco / Dance"], "aliases": ["acid", "acid house"]},
+    {"name": "Deep House", "parent": "House", "djBuckets": ["House / Disco / Dance", "Deep / Melodic / Hypnotic"], "aliases": ["deep house"]},
+    {"name": "French House", "parent": "House", "djBuckets": ["House / Disco / Dance"], "aliases": ["french house"]},
+    {"name": "Tech House", "parent": "House", "djBuckets": ["House / Disco / Dance"], "aliases": ["tech house", "hard house", "jackin house"]},
+    {"name": "Afro House", "parent": "House", "djBuckets": ["House / Disco / Dance", "Heat / Global / Latin / Afro / Reggae"], "aliases": ["afro house"]},
+    {"name": "Organic / Melodic House", "parent": "House", "djBuckets": ["Deep / Melodic / Hypnotic", "House / Disco / Dance"], "aliases": ["organic house", "melodic house", "melodic house and techno", "lo-fi house", "tribal house"]},
+    {"name": "Nu Disco", "parent": "Disco", "djBuckets": ["House / Disco / Dance"], "aliases": ["nu disco", "nu-disco", "nudisco"]},
+    {"name": "Italo Disco", "parent": "Disco", "djBuckets": ["House / Disco / Dance", "EBM / Wave / Dark"], "aliases": ["italo disco"]},
+    {"name": "Post-Disco", "parent": "Disco", "djBuckets": ["House / Disco / Dance", "Funky / Groove / Soul / Jazz"], "aliases": ["post-disco", "post disco", "disco house"]},
+    {"name": "Acid Techno", "parent": "Techno", "djBuckets": ["Techno / Rave / Trance"], "aliases": ["acid techno"]},
+    {"name": "Dub Techno", "parent": "Techno", "djBuckets": ["Deep / Melodic / Hypnotic", "Techno / Rave / Trance"], "aliases": ["dub techno"]},
+    {"name": "Melodic Techno", "parent": "Techno", "djBuckets": ["Deep / Melodic / Hypnotic", "Techno / Rave / Trance"], "aliases": ["melodic techno"]},
+    {"name": "Minimal Techno", "parent": "Techno", "djBuckets": ["Techno / Rave / Trance", "Deep / Melodic / Hypnotic"], "aliases": ["minimal techno"]},
+    {"name": "Hard Techno", "parent": "Techno", "djBuckets": ["Techno / Rave / Trance"], "aliases": ["hard techno"]},
+    {"name": "Psytrance", "parent": "Trance / Rave", "djBuckets": ["Techno / Rave / Trance"], "aliases": ["psytrance", "psy trance"]},
+    {"name": "Gabber / Hardcore", "parent": "Trance / Rave", "djBuckets": ["Techno / Rave / Trance"], "aliases": ["gabber", "hardcore", "hardcore techno", "digital hardcore"]},
+    {"name": "Electroclash", "parent": "Electro", "djBuckets": ["Breaks / Bass / Garage / Jungle", "EBM / Wave / Dark"], "aliases": ["electroclash"]},
+    {"name": "Electro House", "parent": "Electro", "djBuckets": ["House / Disco / Dance", "Breaks / Bass / Garage / Jungle"], "aliases": ["electro house", "edm", "trap edm"]},
+    {"name": "Breakbeat", "parent": "Breaks", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["break", "breakbeat", "breakbeats", "breaks", "big beat"]},
+    {"name": "UK Garage", "parent": "Garage / UK Bass", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["uk garage", "ukg"]},
+    {"name": "2-Step", "parent": "Garage / UK Bass", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["2-step", "2 step", "two step"]},
+    {"name": "Bassline / UK Funky", "parent": "Garage / UK Bass", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["bassline", "uk funky"]},
+    {"name": "Dubstep", "parent": "Bass / Soundsystem", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["dubstep"]},
+    {"name": "Future Bass", "parent": "Garage / UK Bass", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["future bass", "miami bass"]},
+    {"name": "Jungle", "parent": "Jungle / DnB", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["jungle"]},
+    {"name": "Drum & Bass", "parent": "Jungle / DnB", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["drum & bass", "drum and bass", "dnb", "d&b", "liquid funk"]},
+    {"name": "Footwork / Juke", "parent": "Bass / Soundsystem", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["footwork", "juke"]},
+    {"name": "Halftime", "parent": "Bass / Soundsystem", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["halftime", "half time"]},
+    {"name": "Breakcore", "parent": "Jungle / DnB", "djBuckets": ["Breaks / Bass / Garage / Jungle"], "aliases": ["breakcore"]},
+    {"name": "Industrial", "parent": "EBM / Industrial", "djBuckets": ["EBM / Wave / Dark"], "aliases": ["industrial", "post-industrial"]},
+    {"name": "Darkwave", "parent": "Wave / Post-punk", "djBuckets": ["EBM / Wave / Dark"], "aliases": ["darkwave", "dark wave", "deathrock", "gothic rock"]},
+    {"name": "Cold Wave", "parent": "Wave / Post-punk", "djBuckets": ["EBM / Wave / Dark"], "aliases": ["cold wave", "coldwave"]},
+    {"name": "New Wave", "parent": "Wave / Post-punk", "djBuckets": ["EBM / Wave / Dark", "Pop / Rock / Indie"], "aliases": ["new wave"]},
+    {"name": "Post-punk", "parent": "Wave / Post-punk", "djBuckets": ["EBM / Wave / Dark", "Pop / Rock / Indie"], "aliases": ["post-punk", "post punk"]},
+    {"name": "Minimal Synth / Wave", "parent": "Wave / Post-punk", "djBuckets": ["EBM / Wave / Dark"], "aliases": ["minimal synth", "minimal wave", "synthpop", "synthwave"]},
+    {"name": "Dark Disco", "parent": "EBM / Industrial", "djBuckets": ["EBM / Wave / Dark", "House / Disco / Dance"], "aliases": ["dark disco"]},
+    {"name": "Trap", "parent": "Rap / Hip-Hop", "djBuckets": ["Rap / R&B / Club Urbain"], "aliases": ["trap", "crunk", "southern hip hop"]},
+    {"name": "Grime", "parent": "Rap / Hip-Hop", "djBuckets": ["Rap / R&B / Club Urbain"], "aliases": ["grime"]},
+    {"name": "Jazz Rap", "parent": "Rap / Hip-Hop", "djBuckets": ["Rap / R&B / Club Urbain", "Funky / Groove / Soul / Jazz"], "aliases": ["jazz rap", "old school hip hop", "east coast hip hop", "west coast hip hop"]},
+    {"name": "French Rap", "parent": "Rap / Hip-Hop", "djBuckets": ["Rap / R&B / Club Urbain"], "aliases": ["french rap", "rap francais"]},
+    {"name": "Jazz Funk", "parent": "Jazz / Broken Beat", "djBuckets": ["Funky / Groove / Soul / Jazz"], "aliases": ["jazz funk", "jazz-funk", "soul jazz", "latin jazz", "jazz fusion"]},
+    {"name": "Acid Jazz", "parent": "Jazz / Broken Beat", "djBuckets": ["Funky / Groove / Soul / Jazz"], "aliases": ["acid jazz"]},
+    {"name": "Nu Jazz", "parent": "Jazz / Broken Beat", "djBuckets": ["Funky / Groove / Soul / Jazz"], "aliases": ["nu jazz", "nujazz"]},
+    {"name": "Broken Beat", "parent": "Jazz / Broken Beat", "djBuckets": ["Funky / Groove / Soul / Jazz"], "aliases": ["broken beat", "bruk"]},
+    {"name": "Rare Groove", "parent": "Funk / Soul", "djBuckets": ["Funky / Groove / Soul / Jazz"], "aliases": ["rare groove"]},
+    {"name": "Motown / Northern Soul", "parent": "Funk / Soul", "djBuckets": ["Funky / Groove / Soul / Jazz"], "aliases": ["motown", "northern soul", "classic soul"]},
+    {"name": "Indie Dance", "parent": "House", "djBuckets": ["House / Disco / Dance", "Pop / Rock / Indie"], "aliases": ["indie dance"]},
+    {"name": "Hyperpop", "parent": "Pop", "djBuckets": ["Pop / Rock / Indie"], "aliases": ["hyperpop"]},
+    {"name": "Chanson / Variete", "parent": "Pop", "djBuckets": ["Pop / Rock / Indie"], "aliases": ["chanson", "variete francaise", "variété française"]},
+    {"name": "Indie / Alternative Rock", "parent": "Rock / Indie", "djBuckets": ["Pop / Rock / Indie"], "aliases": ["rock inde", "indie rock", "alternative rock", "alternative", "britpop", "madchester", "art rock", "stoner rock"]},
+    {"name": "Punk / Garage Rock", "parent": "Rock / Indie", "djBuckets": ["Pop / Rock / Indie"], "aliases": ["punk", "garage rock", "egg punk", "riot grrrl", "proto-punk", "noise rock", "queercore", "psychobilly"]},
+    {"name": "Shoegaze / Dream Pop", "parent": "Rock / Indie", "djBuckets": ["Pop / Rock / Indie", "Deep / Melodic / Hypnotic"], "aliases": ["shoegaze", "dream pop"]},
+    {"name": "Psychedelic / Krautrock", "parent": "Rock / Indie", "djBuckets": ["Pop / Rock / Indie", "Deep / Melodic / Hypnotic"], "aliases": ["psychedelic", "neo-psychedelic", "psychedelic rock", "krautrock", "space rock"]},
+    {"name": "Reggaeton / Urbano", "parent": "Latin / Afro / World", "djBuckets": ["Heat / Global / Latin / Afro / Reggae", "Rap / R&B / Club Urbain"], "aliases": ["reggaeton", "urbano latino", "trap latino"]},
+    {"name": "Dancehall", "parent": "Reggae / Dub / Dancehall", "djBuckets": ["Heat / Global / Latin / Afro / Reggae"], "aliases": ["dancehall", "dance hall", "ragga"]},
+    {"name": "Dub / Roots Reggae", "parent": "Reggae / Dub / Dancehall", "djBuckets": ["Heat / Global / Latin / Afro / Reggae", "Deep / Melodic / Hypnotic"], "aliases": ["dub", "roots reggae", "reggae dub"]},
+    {"name": "Afrobeat / Afrobeats", "parent": "Latin / Afro / World", "djBuckets": ["Heat / Global / Latin / Afro / Reggae"], "aliases": ["afrobeat", "afrobeats", "afro", "musique africaine", "highlife"]},
+    {"name": "Cumbia / Salsa", "parent": "Latin / Afro / World", "djBuckets": ["Heat / Global / Latin / Afro / Reggae"], "aliases": ["cumbia", "salsa", "son cubano", "cha cha cha"]},
+    {"name": "Bossa / Brazilian", "parent": "Latin / Afro / World", "djBuckets": ["Heat / Global / Latin / Afro / Reggae", "Funky / Groove / Soul / Jazz"], "aliases": ["bossa nova", "brazilian", "brazilian jazz"]},
+    {"name": "IDM / Glitch", "parent": "Ambient / Experimental", "djBuckets": ["Ambient / Experimental / Soundtrack / Tools"], "aliases": ["idm", "glitch"]},
+    {"name": "Trip Hop / Downtempo", "parent": "Ambient / Experimental", "djBuckets": ["Deep / Melodic / Hypnotic", "Ambient / Experimental / Soundtrack / Tools"], "aliases": ["trip hop", "trip-hop", "downtempo", "chill out"]},
+    {"name": "Noise / Avant-Garde", "parent": "Ambient / Experimental", "djBuckets": ["Ambient / Experimental / Soundtrack / Tools"], "aliases": ["noise", "avant-garde", "avant garde"]},
+    {"name": "Soundtrack / Score", "parent": "Soundtrack / VGM / Tools", "djBuckets": ["Ambient / Experimental / Soundtrack / Tools"], "aliases": ["soundtrack", "ost", "score", "film score", "musiques de films"]},
+    {"name": "VGM / Anime", "parent": "Soundtrack / VGM / Tools", "djBuckets": ["Ambient / Experimental / Soundtrack / Tools"], "aliases": ["vgm", "vgm soundtrack", "video game music", "anime", "jeux video", "jeux vidéo"]},
+    {"name": "Tools / Samples", "parent": "Soundtrack / VGM / Tools", "djBuckets": ["Ambient / Experimental / Soundtrack / Tools"], "aliases": ["tools samples", "tools / samples", "tool", "tools", "sample", "samples", "spoken word", "interlude"]}
+  ]
+}

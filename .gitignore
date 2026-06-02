@@ -33,6 +33,10 @@ inbox/
 
 # Except configuration templates
 !config/paths.json.example
+!config/
+!config/*.json.example
+!schemas/
+!schemas/*.schema.json
 
 # OS generated files
 .DS_Store

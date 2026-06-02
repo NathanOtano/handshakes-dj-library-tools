@@ -113,6 +113,48 @@ pwsh -NoProfile -File .\scripts\Sync-RekordboxSmartPlaylists.ps1 -Mode LiveApply
 
 Le mode par défaut ajoute les nouveaux morceaux et conserve les morceaux déjà présents dans la playlist normale. Ajouter `-RemoveStale` seulement si la playlist normale doit devenir un miroir exact de la playlist intelligente.
 
+## `Audit-RekordboxGenreTaxonomy.ps1`
+
+Audite une taxonomie de genres déclarée dans `config/dj-genre-taxonomy.json` et vérifie quels morceaux locaux alimenteraient les grands bacs DJ, les genres musicologiques et les sous-genres. Le script lit une copie de la base Rekordbox et ne modifie rien.
+
+Préparer la config à partir du template public :
+
+```powershell
+Copy-Item .\config\dj-genre-taxonomy.json.example .\config\dj-genre-taxonomy.json
+```
+
+```powershell
+pwsh -NoProfile -File .\scripts\Audit-RekordboxGenreTaxonomy.ps1 -Json
+```
+
+La taxonomie est une table d'alias : les tags source restent inchangés dans les fichiers et dans Rekordbox, mais plusieurs variantes comme `DnB`, `Drum and Bass` ou `Drum & Bass` peuvent alimenter une même playlist canonique.
+
+## `Sync-RekordboxGenreTaxonomy.ps1`
+
+Matérialise la taxonomie de genres en playlists normales Rekordbox, triées par BPM croissant. Le script garde un workflow en trois temps : plan sur copie, application sur copie, puis live seulement avec confirmation explicite et Rekordbox fermé.
+
+```powershell
+pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode Plan -Json
+pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode CopyApply -Apply -Json
+pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode LiveApply -Apply -ConfirmLiveWrite -Json
+```
+
+La méthode sûre utilise `pyrekordbox` (`create_playlist_folder` / `create_playlist`) pour créer les playlists, afin que `master.db` et `masterPlaylists6.xml` restent cohérents. Les runs de copie incluent aussi `masterPlaylists6.xml` et `automixPlaylist6.xml`.
+
+Par défaut, la sortie JSON reste compacte. Ajouter `-IncludePlans` seulement pour obtenir le détail de chaque playlist.
+
+Options de réparation ciblées :
+
+```powershell
+pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode Plan -RepairManagedPlaylistIds -SyncManagedPlaylistXml -Json
+pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode CopyApply -Apply -RepairManagedPlaylistIds -SyncManagedPlaylistXml -Json
+pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode LiveApply -Apply -ConfirmLiveWrite -RepairManagedPlaylistIds -SyncManagedPlaylistXml -Json
+```
+
+- `-RepairManagedPlaylistIds` corrige uniquement les playlists calculées depuis `config/dj-genre-taxonomy.json` dont l'ID Rekordbox n'est pas numérique, puis met à jour les `ParentID` et les memberships.
+- `-SyncManagedPlaylistXml` ajoute uniquement les entrées XML manquantes des playlists gérées par cette taxonomie.
+- Ne pas élargir ces réparations à toutes les playlists Rekordbox sans audit séparé.
+
 ## `Audit-DjLibraryCleanup.ps1`
 
 Audite en lecture seule les fichiers locaux, les chemins Rekordbox, les doublons binaires exacts et la couverture locale des playlists ciblées. Le script copie `master.db` dans `runtime/`, écrit les rapports sous `reports/`, et ne modifie ni Rekordbox ni les fichiers.

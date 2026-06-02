@@ -6,6 +6,7 @@ These scripts help in:
 - **Library Auditing**: Finding exact audio duplicates, chromaprint (acoustic) overlap, and orphaned metadata.
 - **Metadata Management**: Normalizing tags, adding missing files to Rekordbox, and cleaning up filenames (e.g., removing `_processed` suffixes after using Audio Processor).
 - **Synchronization**: Syncing smart playlists, relinking mounted drive paths, and matching your local library against streaming platform availability (e.g., TIDAL, Spotify).
+- **Genre taxonomy playlists**: Auditing genre aliases and materializing safe Rekordbox genre buckets, subgenres, and BPM-sorted normal playlists.
 - **Quality Control**: Measuring audio quality and verifying readiness of your tracks.
 
 ## Prerequisites
@@ -33,7 +34,7 @@ Most scripts take arguments like `-MusicRoot` or `--music-root`. Alternatively, 
   - `.js` files: Scripts for integrations like OneTagger.
 - **`ui/`**: A modern Tauri frontend providing a simple visual interface to run scripts.
 - **`docs/`**: Technical documentation.
-  - [`USB_MIDI_MAPPING_GUIDE.md`](file:///c:/Users/Nathan/Documents/Code/dj-library-public/docs/USB_MIDI_MAPPING_GUIDE.md): Guide on reverse-engineering proprietary USB controllers (like the XDJ-AERO) into standard Windows MIDI.
+  - [`USB_MIDI_MAPPING_GUIDE.md`](docs/USB_MIDI_MAPPING_GUIDE.md): Guide on reverse-engineering proprietary USB controllers (like the XDJ-AERO) into standard Windows MIDI.
 
 ## Usage (Graphical Interface)
 
@@ -70,6 +71,14 @@ pwsh -NoProfile -File .\scripts\Audit-DjLibraryCleanup.ps1 -AudioRoot "C:\DJ_Mus
 **Add newly processed files to Rekordbox:**
 ```powershell
 pwsh -NoProfile -File .\scripts\Add-RekordboxProcessedContent.ps1 -Mode Plan -DuplicateCsv reports\local-duplicate-candidates.csv
+```
+
+**Audit and materialize Rekordbox genre taxonomy playlists:**
+```powershell
+Copy-Item .\config\dj-genre-taxonomy.json.example .\config\dj-genre-taxonomy.json
+pwsh -NoProfile -File .\scripts\Audit-RekordboxGenreTaxonomy.ps1 -Json
+pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode Plan -Json
+pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode CopyApply -Apply -Json
 ```
 
 > **Warning**: Modifying the Rekordbox `master.db` directly carries risks. Always ensure Rekordbox is closed and you have backups before running scripts with `-Apply` flags.

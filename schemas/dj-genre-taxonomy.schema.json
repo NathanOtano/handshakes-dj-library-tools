@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/dj-genre-taxonomy.schema.json",
+  "title": "DJ genre taxonomy",
+  "type": "object",
+  "required": ["version", "playlistRoots", "defaults", "djBuckets", "strictGenres", "subgenres"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"type": "string"},
+    "version": {"type": "string"},
+    "playlistRoots": {
+      "type": "object",
+      "required": ["djBuckets", "musicologicalGenres", "subgenres", "audit"],
+      "additionalProperties": false,
+      "properties": {
+        "djBuckets": {"type": "string"},
+        "musicologicalGenres": {"type": "string"},
+        "subgenres": {"type": "string"},
+        "audit": {"type": "string"}
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "required": ["subgenreMinTracks", "sort", "preserveOriginalGenreTags", "materializeAsNormalPlaylists"],
+      "additionalProperties": false,
+      "properties": {
+        "subgenreMinTracks": {"type": "integer", "minimum": 1},
+        "sort": {"type": "string", "enum": ["bpm_only"]},
+        "preserveOriginalGenreTags": {"type": "boolean"},
+        "materializeAsNormalPlaylists": {"type": "boolean"}
+      }
+    },
+    "djBuckets": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/bucket"}
+    },
+    "djSubBuckets": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/djSubBucket"}
+    },
+    "strictGenres": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/category"}
+    },
+    "subgenres": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/subgenre"}
+    }
+  },
+  "$defs": {
+    "bucket": {
+      "type": "object",
+      "required": ["name", "aliases", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string"},
+        "aliases": {"type": "array", "items": {"type": "string"}},
+        "description": {"type": "string"}
+      }
+    },
+    "category": {
+      "type": "object",
+      "required": ["name", "djBuckets", "aliases"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string"},
+        "djBuckets": {"type": "array", "items": {"type": "string"}},
+        "aliases": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "djSubBucket": {
+      "type": "object",
+      "required": ["name", "parent", "aliases", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string"},
+        "parent": {"type": "string"},
+        "aliases": {"type": "array", "items": {"type": "string"}},
+        "description": {"type": "string"}
+      }
+    },
+    "subgenre": {
+      "type": "object",
+      "required": ["name", "parent", "djBuckets", "aliases"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string"},
+        "parent": {"type": "string"},
+        "djBuckets": {"type": "array", "items": {"type": "string"}},
+        "aliases": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
