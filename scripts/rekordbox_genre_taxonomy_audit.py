@@ -208,6 +208,7 @@ def make_taxonomy_index(config: dict[str, Any]) -> dict[str, Any]:
 def classify_terms(
     terms: list[str],
     alias_to_matches: dict[str, list[dict[str, Any]]],
+    content=None,
 ) -> dict[str, Any]:
     dj_buckets: set[str] = set()
     dj_sub_buckets: set[tuple[str, str]] = set()
@@ -232,7 +233,7 @@ def classify_terms(
             if match.get("subgenre"):
                 subgenres.add(match["subgenre"])
 
-    return {
+    result = {
         "djBuckets": dj_buckets,
         "djSubBuckets": dj_sub_buckets,
         "strictGenres": strict_genres,
@@ -240,6 +241,8 @@ def classify_terms(
         "matchedAliases": matched_aliases,
         "unmatchedTerms": unmatched_terms,
     }
+    from dj_bucket_assignments import apply_assignment
+    return apply_assignment(result, content, alias_to_matches)
 
 
 def bpm_sort_key(row: DjmdContent) -> tuple[int, int, str, int]:
@@ -292,7 +295,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             terms, source_fields = content_genre_terms(content, genre_by_id)
             for term in terms:
                 term_counter[term] += 1
-            classification = classify_terms(terms, alias_to_matches)
+            classification = classify_terms(terms, alias_to_matches, content)
             for term in classification["unmatchedTerms"]:
                 unmatched_counter[term] += 1
 

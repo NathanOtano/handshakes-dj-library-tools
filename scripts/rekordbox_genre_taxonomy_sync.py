@@ -292,7 +292,7 @@ def build_desired_playlists(db: Rekordbox6Database, config: dict[str, Any]) -> d
 
     for content in contents:
         terms, _ = content_genre_terms(content, genre_by_id)
-        classification = classify_terms(terms, alias_to_matches)
+        classification = classify_terms(terms, alias_to_matches, content)
         content_id = as_str(content.ID)
 
         for bucket in classification["djBuckets"]:

@@ -11,7 +11,7 @@ These scripts help in:
 
 ## Prerequisites
 
-- **Python 3.x**: Ensure Python is installed.
+- **Python 3.10+**: Ensure Python is installed.
 - **PowerShell 7+**: Many entry point scripts are `.ps1`.
 - **Dependencies**: You might need modules like `mutagen`, `requests`, `pyacoustid` (if using chromaprint features), and SQLite drivers for Rekordbox databases. Check the Python files for imports.
 
@@ -101,3 +101,21 @@ Users are responsible for ensuring that their use of these scripts complies with
 - **Serato** is a trademark of Serato Limited.
 - **Spotify**, **TIDAL**, **Audio Processor**, and **OneTagger** are trademarks of their respective owners.
 - This project is **100% unofficial and independent**. It is not affiliated with, sponsored by, or endorsed by AlphaTheta, Pioneer DJ, Serato, or any other mentioned brand. All trademarks belong to their respective owners.
+
+## Classement complet et contrôles d’export USB
+
+La [méthode de fiabilité USB](docs/usb-export-reliability.md) décrit les erreurs
+de compteur, d’index et de chemins d’analyse rencontrées sur un export natif,
+ainsi que les contrôles reproductibles associés. Les modules de profil natif
+sont des briques d’intégration ; ce dépôt ne fournit pas encore un exporteur
+universel prêt à synchroniser n’importe quelle clé depuis l’interface graphique.
+
+Un [registre provisoire de bacs](docs/usb-export-reliability.md#classement-sans-inventer-un-genre)
+peut compléter la taxonomie, sans modifier les genres des fichiers. Les données
+réelles restent dans `runtime/`, ignoré par Git.
+
+Tests synthétiques, sans bibliothèque musicale ni compte connecté :
+
+```text
+python -m unittest discover -s tests -v
+```

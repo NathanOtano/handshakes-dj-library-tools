@@ -1,0 +1,108 @@
+{
+  "tool": "handshakes-dj-library-tools",
+  "mode": "source-public",
+  "scope": "Portable DJ bucket and native USB reliability helpers; source update only",
+  "publicTarget": "https://github.com/NathanOtano/handshakes-dj-library-tools",
+  "basePublicCommit": "13a22150e4052cbd44d4cfd7da47054ac1f3745e",
+  "export": {
+    "method": "explicit file allowlist",
+    "excludedClasses": [
+      "private library data",
+      "real bucket registries",
+      "database files and keys",
+      "local paths and volume identities",
+      "private history",
+      "audio",
+      "runtime and logs"
+    ]
+  },
+  "checks": {
+    "history": "Only existing public ancestry;10 existing commits scanned by Gitleaks8.30.1 with redaction,0 findings",
+    "personalData": "Strict public safety scan:0 failures",
+    "warnings": {
+      "rule": "sensitive-keyword-review",
+      "treatment": "Reviewed identifiers and security prose about tokens/secrets/cookies; no literal credential value. This exact rule is the only accepted scanner warning class."
+    },
+    "tests": "12 synthetic Python tests pass on Python3.12 without private databases or authenticated services",
+    "license": "MIT; new helpers are original integration code; no third-party decoder or database key bundled",
+    "install": "Source modules tested in a clean public checkout using standard Python; no installer or GUI change",
+    "runtime": "No running service, model download or live USB write",
+    "assets": "not_applicable: source-only update; existing graphical installers are unchanged",
+    "hardware": "Targeted XDJ-AERO observations only; no universal device or per-track playback guarantee",
+    "contentScan": {
+      "tool": "Gitleaks",
+      "version": "8.30.1",
+      "findings": 0
+    }
+  },
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "c202e2647e2444125d2998d73da05c75484e379c743c9690a31b5c69ad9457e3"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "a9914f3e88d08d2e06927108fb3a6a34e09feda697dd56919cd9b865a7ad014c"
+    },
+    {
+      "path": "README.md",
+      "sha256": "e8b6811b47ce47fd09310160beec1dc57fb3272ffb280f8f2418ae0c4a8648db"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "f611ff0275e217c25fa0e71abe4aa4df010f65fbfcccad8725e0708bcf01ef08"
+    },
+    {
+      "path": "docs/usb-export-reliability.md",
+      "sha256": "75c13f5eba52748b5c24efb30efa0b5596b5f8c767f0b45ca6b3fee1efcf8887"
+    },
+    {
+      "path": "scripts/audit_dj_usb_readiness.py",
+      "sha256": "56fa0fb053d97f61831e4193c97bb5109e1ecb56a6bf110013067f56bb8885b0"
+    },
+    {
+      "path": "scripts/dj_bucket_assignments.py",
+      "sha256": "1019353627024159585c5d7c1f1a51e2f0d6e079bca8a87ef8fefbdb346afd4b"
+    },
+    {
+      "path": "scripts/rekordbox_genre_taxonomy_audit.py",
+      "sha256": "9450fb7cc7b6f2e2d8ad0de2427171544bb1c83074a1deafb197cc00ec8ea754"
+    },
+    {
+      "path": "scripts/rekordbox_genre_taxonomy_sync.py",
+      "sha256": "d275b9f2cdd45d5f132ff08ff9969c1e5b26d3993d520cc03c17c5336a87d387"
+    },
+    {
+      "path": "scripts/usb_export_policy.py",
+      "sha256": "ba09ff39fe0b36bfbfca286e2a66ade0b391dfae2095598164cb629576d5967e"
+    },
+    {
+      "path": "scripts/usb_native_profile.py",
+      "sha256": "8b7aaf9bc1a934d03170742ca6c3dd5a44b3fec451eaaa56d4fbfd512ac1536a"
+    },
+    {
+      "path": "scripts/usb_playlist_limits.py",
+      "sha256": "318d02dba4592aabbe75bb57f8c91e9ed64b65376b7495cd1c2ed35dad6a41f8"
+    },
+    {
+      "path": "tests/test_dj_bucket_assignments.py",
+      "sha256": "a54186f5394ab759a3cf15899f9d0dab02b084be774bc415cdc88e9fbdfe8dad"
+    },
+    {
+      "path": "tests/test_dj_usb_readiness.py",
+      "sha256": "8a20848ee50b788ed1144d0a4590169d0d1380488b008ea490537f26a24c7bf0"
+    },
+    {
+      "path": "tests/test_usb_export_policy.py",
+      "sha256": "7ebdc928060eb2e451e750adf09f1452ce6c4faa8464273abd418f8ec759a46a"
+    },
+    {
+      "path": "tests/test_usb_native_profile.py",
+      "sha256": "5a7e214b2f10066577d8ad45008bba09c23f8de759eada81816454a88fd0a5ad"
+    },
+    {
+      "path": "tests/test_usb_playlist_limits.py",
+      "sha256": "ec4d6e47769cb9c8c8dea251064ce38d5003448b81c80039e0f446985ab6a105"
+    }
+  ]
+}
