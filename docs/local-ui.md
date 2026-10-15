@@ -1,6 +1,6 @@
 # Interface locale minimale
 
-Version de préparation : trois écrans, **Bibliothèque → Préparer → Clé USB**.
+Version expérimentale : trois écrans, **Bibliothèque → Préparer → Clé USB**.
 La page appelle des commandes réelles configurées localement. Aucun exemple
 chiffré ni résultat fictif n’est affiché dans le mode normal.
 
@@ -9,6 +9,8 @@ chiffré ni résultat fictif n’est affiché dans le mode normal.
 Python 3.10+ suffit au serveur. Les commandes DJ conservent leurs dépendances.
 Copier `config/local-ui.json.example` vers `config/local-ui.json`, puis renseigner
 des commandes de confiance sous forme de tableaux d’arguments, jamais de shell.
+Le modèle démarre sans commandes : il permet de visiter l’interface, avec les
+opérations désactivées jusqu’à leur configuration.
 
 ```powershell
 python scripts/dj_local_ui.py --config config/local-ui.json
@@ -53,6 +55,10 @@ les actions. Ne pas exposer ce serveur avec un tunnel ou sur le réseau.
 L’interface lance les trois opérations, affiche leurs rapports et contrôle leur
 enchaînement. Elle ne remplace pas les analyses natives, l’exporteur, les sauvegardes
 ni l’arbitrage musical. Elle ne classe pas automatiquement les titres sans bac.
+Le dépôt ne fournit pas d’exporteur natif complet ni de configuration universelle.
+L’adaptateur exige un exporteur compatible déjà installé, son environnement
+Python et des paramètres locaux de bibliothèque et de volumes. Les fichiers
+de configuration réels et les données musicales ne sont pas distribués.
 L’adaptateur `dj_ui_native_adapter.py` crée une copie cohérente de la collection,
 extrait l’arbre USB courant et prépare un nouveau manifeste depuis cette copie.
 Il compare l’export local à ces données fraîches avant le plan de copie. S’il ne
@@ -85,5 +91,5 @@ complets restent sur disque. Vérification bureau et mobile.
 Source de comportement : `scripts/dj_local_ui.py`. Surface : `local_ui/index.html`,
 `app.js`, `style.css`. La configuration locale choisit les commandes existantes ;
 elle ne modifie pas leurs garde-fous. Les captures de validation restent des
-artefacts de test. Le dépôt public reste distribué en CLI tant que cette version
-locale expérimentale n’a pas été acceptée pour publication.
+artefacts de test. L’interface est distribuée en code source, avec la ligne de
+commande comme référence ; aucun installateur ni service hébergé n’est fourni.

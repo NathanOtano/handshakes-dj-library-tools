@@ -1,9 +1,9 @@
 {
   "tool": "handshakes-dj-library-tools",
   "mode": "source-public",
-  "scope": "CLI source distribution, documentation and configuration cleanup",
+  "scope": "Experimental local GUI source, guarded command adapters and CLI tools",
   "publicTarget": "https://github.com/NathanOtano/handshakes-dj-library-tools",
-  "basePublicCommit": "27cdf143d17df658a0cec40674682cb15c262b23",
+  "basePublicCommit": "5cda5cfee6c5ef47a4cf715788ac9efe30aa9e9f",
   "export": {
     "method": "explicit file allowlist",
     "excludedClasses": [
@@ -23,12 +23,12 @@
       "rule": "sensitive-keyword-review",
       "treatment": "Reviewed identifiers and security prose about tokens/secrets/cookies; no literal credential value. This exact rule is the only accepted scanner warning class."
     },
-    "tests": "12 synthetic Python tests pass on Python3.12 without private databases or authenticated services",
+    "tests": "33 synthetic Python tests pass on Python3.12 without private databases or authenticated services; fixture browser flow checked on desktop/mobile",
     "license": "MIT; new helpers are original integration code; no third-party decoder or database key bundled",
-    "install": "Source-only distribution; path template parsed by the read-only readiness command; no installer provided",
-    "runtime": "No library/database/USB mutation; no background service",
-    "assets": "not_applicable: no GUI, binary or installer distributed",
-    "hardware": "Targeted XDJ-AERO observations only; no universal device or per-track playback guarantee",
+    "install": "Source-only; standard Python server and example configuration startup verified without real DJ commands; no installer",
+    "runtime": "Explicit loopback-only server when launched; no scheduler or autostart. No live library or USB mutation during release checks",
+    "assets": "Source GUI assets only; no compiled binary, installer or release asset",
+    "hardware": "Earlier targeted XDJ-AERO observations only; GUI physical USB copy and new hardware acceptance not performed",
     "contentScan": {
       "tool": "Gitleaks",
       "version": "8.30.1",
@@ -38,11 +38,23 @@
   "files": [
     {
       "path": ".gitignore",
-      "sha256": "4a538041ce95ca943e3f6e4335306fd8f80d32db05c4aa4f7b28ef9070737d73"
+      "sha256": "583c4f9a4cdb049be7c024f29b9dcb9a803c3f6b5e6817c2dc7b501cafba1449"
+    },
+    {
+      "path": ".stitch/DESIGN.md",
+      "sha256": "e64cc47ec7eadef624cc10602011134147e41275708871bb225d82ffbcc88b87"
+    },
+    {
+      "path": ".stitch/README.md",
+      "sha256": "136304a3c90d046979c7a5a35c2328078e97741d7d14099a3c66620b3d780dab"
+    },
+    {
+      "path": ".stitch/project.json",
+      "sha256": "ec81e36f35d874ee8f168240bada74a95ba8312e4954106a116519326a30f91f"
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "fb66c7c16c789e18d76e8babdef969576a70b725c3d80322ede2330bb396d5fa"
+      "sha256": "33f210f7741d83451f24aa7241e1b9a80619707c743289644124e7da62078aa0"
     },
     {
       "path": "LICENSE",
@@ -50,7 +62,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "a856ba5fad11c915ab0f4c12a6aada798cf7e4b986dcc694e0098055992cb723"
+      "sha256": "f76c1a38d8fdc608ec1bed5fa1a1b710c6a93661d489c06f8222328fb0fd5982"
     },
     {
       "path": "SECURITY.md",
@@ -65,8 +77,16 @@
       "sha256": "32583e6745af7137d4dd29bc973c0f474583f8410db07b390573f1d53f3ec251"
     },
     {
+      "path": "config/local-ui.json.example",
+      "sha256": "6532d5ba63e26a6c322b5f80800e3f4d09e907ec822ddd48ae70cafab43629d7"
+    },
+    {
       "path": "docs/USB_MIDI_MAPPING_GUIDE.md",
       "sha256": "36856d5a5c1f8b7a0b9fda3e75e0cec4a4e1287afcc78c39730a1ba99f8c84d7"
+    },
+    {
+      "path": "docs/local-ui.md",
+      "sha256": "9864002ef01be5cef196253eaadcc6302de38f195ff2733ed4d94eab6f3a009e"
     },
     {
       "path": "docs/usage.md",
@@ -75,6 +95,22 @@
     {
       "path": "docs/usb-export-reliability.md",
       "sha256": "75c13f5eba52748b5c24efb30efa0b5596b5f8c767f0b45ca6b3fee1efcf8887"
+    },
+    {
+      "path": "local_ui/app.js",
+      "sha256": "c182f17ba3b8512a0bb764e8486845e1b5c607de47f9da64dbd2976fef25f26c"
+    },
+    {
+      "path": "local_ui/favicon.svg",
+      "sha256": "c271da283969971ef57488229041b60c9967ef65fd7e747e2469b94cf58ba19b"
+    },
+    {
+      "path": "local_ui/index.html",
+      "sha256": "0975a993fecef3d925f2ab6ab24bec8baa525fc0ea5ffaa7d214c886cd3a7364"
+    },
+    {
+      "path": "local_ui/style.css",
+      "sha256": "380598a7263d1cacc48b29018a1daebec1a92f1d34ea9b635f67838d6ed99474"
     },
     {
       "path": "schemas/dj-genre-taxonomy.schema.json",
@@ -253,12 +289,28 @@
       "sha256": "9e328fcbc6604037747eef0ad19a5ad29fc2998740211cd5dca965d944a2bec0"
     },
     {
+      "path": "scripts/dj_local_ui.py",
+      "sha256": "9c48a448f463afe23d48cd04756065bcebeddbc3982f229b2691003c16693ede"
+    },
+    {
+      "path": "scripts/dj_ui_native_adapter.py",
+      "sha256": "7318992d378529e4dca7fcd05743b09d895a6d74aefb72dae9dfe2f87412d9e5"
+    },
+    {
+      "path": "scripts/dj_ui_profile.py",
+      "sha256": "79441908a3389103a65a698457d739f3770b51a48c495beebca3474de8baaea2"
+    },
+    {
       "path": "scripts/genre_recommendation_apply.py",
       "sha256": "387886cea7f1287cb0013b915c9916468e437011897ca4d0df0446dbe799185c"
     },
     {
       "path": "scripts/onetagger_coverage_runner.js",
       "sha256": "fdbbfb27d6484e9e109ebdab27f61e48b8e7cb777dac198f01a35825ed7378d9"
+    },
+    {
+      "path": "scripts/open_dj_ui.pyw",
+      "sha256": "6aeefd7388879a69207a69cce2270153b19216d66747b2780223aec0a4c97843"
     },
     {
       "path": "scripts/rekordbox_add_processed_content.py",
@@ -353,12 +405,24 @@
       "sha256": "318d02dba4592aabbe75bb57f8c91e9ed64b65376b7495cd1c2ed35dad6a41f8"
     },
     {
+      "path": "tests/local_ui.browser.cjs",
+      "sha256": "0a0ef99b86d3e20a4bf8ee1a1f46367afd7ecc6cfc7eef30d1d6c5871190cfb2"
+    },
+    {
       "path": "tests/test_dj_bucket_assignments.py",
       "sha256": "a54186f5394ab759a3cf15899f9d0dab02b084be774bc415cdc88e9fbdfe8dad"
     },
     {
       "path": "tests/test_dj_usb_readiness.py",
       "sha256": "8a20848ee50b788ed1144d0a4590169d0d1380488b008ea490537f26a24c7bf0"
+    },
+    {
+      "path": "tests/test_local_ui.py",
+      "sha256": "3d48411ca965c07b9999191b289e5100ef6836194c5931088d463a135fae270d"
+    },
+    {
+      "path": "tests/test_ui_profile.py",
+      "sha256": "537c44edfc14d33371ba2c1cbd6621c8a02f4bcc0189b55bed2d6620f800417b"
     },
     {
       "path": "tests/test_usb_export_policy.py",
@@ -374,9 +438,9 @@
     }
   ],
   "distribution": {
-    "interface": "CLI",
+    "interface": "CLI and experimental local browser GUI",
     "audience": "Advanced users and supervised agents",
-    "configuration": "Fictitious path and taxonomy templates; real configurations ignored",
-    "validation": "Synthetic helper tests and targeted AERO observations; other scripts require validation on copies"
+    "configuration": "Fictitious templates; trusted operator must configure DJ commands and reports. Real configuration and runtime ignored",
+    "validation": "Synthetic helper/server/profile tests and temporary-target browser flow; targeted historical AERO observations are a separate scope"
   }
 }

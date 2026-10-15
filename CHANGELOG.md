@@ -1,5 +1,13 @@
 # Historique
 
+## 2026-10-15 — Interface locale expérimentale
+
+- Trois écrans : Bibliothèque, Préparer, Clé USB ; serveur Python standard et page locale sans framework.
+- Commandes réelles configurables, rapports, confirmation liée à un aperçu scellé et arrêt coopératif de la copie.
+- Adaptateur pour un exporteur compatible déjà installé ; aucune donnée ni configuration de bibliothèque réelle distribuée.
+- 33 tests Python et parcours graphique bureau/mobile sur cible temporaire.
+- Distribution en code source, sans installateur ni service hébergé. La copie physique depuis cette interface reste à valider ; les essais AERO antérieurs ont une portée distincte.
+
 ## 2026-10-15 — Distribution en ligne de commande
 
 - Retrait du prototype Tauri non validé, de sa capture et du workflow d’installateur.

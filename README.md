@@ -17,6 +17,7 @@ validé pour toutes les bibliothèques et tous les lecteurs.
 | Besoin | Point d’entrée | Portée |
 | --- | --- | --- |
 | Vérifier le dépôt sans bibliothèque musicale | `python -m unittest discover -s tests -v` | Tests synthétiques des helpers de bacs et USB |
+| Ouvrir l’interface locale | [Guide de l’interface](docs/local-ui.md) | Vérification, préparation et copie via des commandes configurées localement |
 | Vérifier les chemins de sa configuration | `scripts/Test-DjLibraryReadiness.ps1` | Diagnostic local, sans création de dossiers par défaut |
 | Auditer fichiers et doublons | `scripts/Audit-DjLibraryCleanup.ps1` | Copie de travail et rapports ; aucune modification des originaux |
 | Préparer l’ajout de fichiers traités | `scripts/Add-RekordboxProcessedContent.ps1 -Mode Plan` | Plan avant toute écriture de collection |
@@ -39,6 +40,17 @@ git clone https://github.com/NathanOtano/handshakes-dj-library-tools.git
 cd handshakes-dj-library-tools
 python -m unittest discover -s tests -v
 ```
+
+Pour ouvrir l’interface, copier `config/local-ui.json.example` vers
+`config/local-ui.json`, puis lancer :
+
+```powershell
+python scripts/dj_local_ui.py --config config/local-ui.json
+```
+
+Ouvrir l’adresse `127.0.0.1` affichée. Le modèle permet de visiter l’interface,
+mais les opérations restent désactivées tant que les commandes DJ et leurs
+rapports ne sont pas configurés. Voir le [contrat des commandes](docs/local-ui.md#contrat-des-commandes).
 
 Pour les commandes `.ps1`, utiliser **PowerShell 7 ou supérieur** sur Windows.
 Les dépendances supplémentaires varient selon l’outil : `pyrekordbox` et son
@@ -64,8 +76,11 @@ Un code de sortie réussi ne suffit pas à prouver la lecture sur un appareil DJ
 
 ## Ce qui est vérifié
 
-- **12 tests synthétiques** couvrent les bacs provisoires, la couverture d’une
-  sélection USB, les limites de playlists et le profil natif étudié.
+- **33 tests Python** couvrent les helpers de bacs et USB, le profil natif,
+  l’extraction de la sélection courante et les garde-fous du serveur local.
+- Le parcours graphique a été vérifié sur bureau et mobile, avec une cible
+  temporaire : confirmation, annulation, arrêt et panne réseau. Cela ne valide
+  pas une copie physique sur clé ni sa lecture sur un appareil.
 - Des essais ciblés sur **XDJ-AERO** ont confirmé un compteur corrigé et la
   recherche par artiste d’un titre avec son analyse reconnue. Les détails et
   limites sont dans la [méthode USB](docs/usb-export-reliability.md).
@@ -81,6 +96,7 @@ universelle avec les autres lecteurs ou versions de Rekordbox.
 
 - `scripts/` : commandes et helpers ; [catalogue](scripts/README.md).
 - `tests/` : cas synthétiques sans bibliothèque réelle.
+- `local_ui/` : interface locale ; [lancement et limites](docs/local-ui.md).
 - `config/` : modèles de configuration ; `schemas/` : schéma de taxonomie.
 - [Utilisation et configuration](docs/usage.md).
 - [Fiabilité du classement et de l’export USB](docs/usb-export-reliability.md).
