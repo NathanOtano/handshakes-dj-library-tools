@@ -1,121 +1,97 @@
-# Handshakes DJ - DJ Library Tools
+# Handshakes DJ — Library Tools
 
-This repository contains a collection of PowerShell and Python scripts designed to automate, clean up, and synchronize a DJ library (Rekordbox and Serato). 
+**Outils en ligne de commande pour utilisateurs avancés et agents supervisés.**
 
-These scripts help in:
-- **Library Auditing**: Finding exact audio duplicates, chromaprint (acoustic) overlap, and orphaned metadata.
-- **Metadata Management**: Normalizing tags, adding missing files to Rekordbox, and cleaning up filenames (e.g., removing `_processed` suffixes after using Audio Processor).
-- **Synchronization**: Syncing smart playlists, relinking mounted drive paths, and matching your local library against streaming platform availability (e.g., TIDAL, Spotify).
-- **Genre taxonomy playlists**: Auditing genre aliases and materializing safe Rekordbox genre buckets, subgenres, and BPM-sorted normal playlists.
-- **Quality Control**: Measuring audio quality and verifying readiness of your tracks.
+Scripts Python et PowerShell pour auditer une bibliothèque DJ, préparer des
+modifications Rekordbox/Serato et contrôler le classement ainsi que les données
+d’un export USB. Le dépôt distribue du code source ; il ne fournit actuellement
+ni interface graphique, ni installateur, ni exporteur USB universel prêt à l’emploi.
 
-## Prerequisites
+## Choisir un point d’entrée
 
-- **Python 3.10+**: Ensure Python is installed.
-- **PowerShell 7+**: Many entry point scripts are `.ps1`.
-- **Dependencies**: You might need modules like `mutagen`, `requests`, `pyacoustid` (if using chromaprint features), and SQLite drivers for Rekordbox databases. Check the Python files for imports.
+| Besoin | Point d’entrée | Portée |
+| --- | --- | --- |
+| Vérifier le dépôt sans bibliothèque musicale | `python -m unittest discover -s tests -v` | Tests synthétiques des helpers de bacs et USB |
+| Vérifier les chemins de sa configuration | `scripts/Test-DjLibraryReadiness.ps1` | Diagnostic local, sans création de dossiers par défaut |
+| Auditer fichiers et doublons | `scripts/Audit-DjLibraryCleanup.ps1` | Copie de travail et rapports ; aucune modification des originaux |
+| Préparer l’ajout de fichiers traités | `scripts/Add-RekordboxProcessedContent.ps1 -Mode Plan` | Plan avant toute écriture de collection |
+| Auditer ou synchroniser la taxonomie | `scripts/Audit-RekordboxGenreTaxonomy.ps1`, `scripts/Sync-RekordboxGenreTaxonomy.ps1` | Audit, plan, essai sur copie puis application explicite |
+| Contrôler les bacs et une sélection USB | [Méthode USB](docs/usb-export-reliability.md) | Couverture, plafonds, analyses, index et compteur natif |
 
-## Setup & Configuration
+Le [guide d’utilisation](docs/usage.md) explique la configuration et les modes
+d’écriture. Le [catalogue des scripts](scripts/README.md) détaille les autres
+opérations : métadonnées, relocalisation, playlists, rapprochement de métadonnées
+Spotify/TIDAL et diagnostics de contrôleur.
 
-To adapt these scripts to your own setup, you must configure your paths.
-Most scripts take arguments like `-MusicRoot` or `--music-root`. Alternatively, you can create a `config/paths.json` (if your fork implements it) or modify the default arguments in the scripts directly.
+## Démarrage sans données privées
 
-**Default Path Placeholders used in these scripts:**
-- `C:\DJ_Music`: The root directory of your DJ library.
-- `C:\DJ_Music\Processed_Library_Root`: The directory containing tracks processed by tools like Audio Processor.
-- `C:\DJ_Music\Playlists\ALL_TRACKS`: The directory containing your main playlist exports.
-- `C:\DJ_Music\_DUPLICATE_QUARANTINE`: Where duplicates are moved.
+Python **3.10 ou supérieur** suffit pour les tests synthétiques ; la dernière
+validation a été exécutée avec Python 3.12. Aucun compte ni fichier musical
+n’est nécessaire.
 
-## Structure
-
-- **`scripts/`**: Contains all the automation logic.
-  - `.ps1` files: Main entry points and task runners.
-  - `.py` files: Core logic, database interactions, and metadata processing.
-  - `.js` files: Scripts for integrations like OneTagger.
-- **`ui/`**: A modern Tauri frontend providing a simple visual interface to run scripts.
-- **`docs/`**: Technical documentation.
-  - [`USB_MIDI_MAPPING_GUIDE.md`](docs/USB_MIDI_MAPPING_GUIDE.md): Guide on reverse-engineering proprietary USB controllers (like the XDJ-AERO) into standard Windows MIDI.
-
-## Usage (Graphical Interface)
-
-![Handshakes DJ Library Tools UI](docs/screenshot.png)
-
-You can use the provided graphical interface to run scripts without the command line.
-
-### For Non-Coders (Install via Download)
-
-1. Go to the [Releases page](https://github.com/NathanOtano/handshakes-dj-library-tools/releases) on GitHub.
-2. Download the latest `HandshakesDJLibraryTools_x.x.x_x64_en-US.msi` file.
-3. Run the installer and open the application from your Start Menu.
-
-### For Developers (Run Locally)
-
-1. **Install Rust**: You must install [Rust](https://rustup.rs/) to compile the UI.
-2. **Install Node.js**: Required to install frontend dependencies.
-3. **Run the UI**:
-   ```powershell
-   cd ui
-   npm install
-   npm run tauri dev
-   ```
-
-## Usage Examples (Command Line)
-
-Most tools are designed to have a "Dry-run" or "Plan" mode first.
-
-**Audit your library for duplicates:**
 ```powershell
-pwsh -NoProfile -File .\scripts\Audit-DjLibraryCleanup.ps1 -AudioRoot "C:\DJ_Music" -AudioHashMode none -Json
-```
-
-**Add newly processed files to Rekordbox:**
-```powershell
-pwsh -NoProfile -File .\scripts\Add-RekordboxProcessedContent.ps1 -Mode Plan -DuplicateCsv reports\local-duplicate-candidates.csv
-```
-
-**Audit and materialize Rekordbox genre taxonomy playlists:**
-```powershell
-Copy-Item .\config\dj-genre-taxonomy.json.example .\config\dj-genre-taxonomy.json
-pwsh -NoProfile -File .\scripts\Audit-RekordboxGenreTaxonomy.ps1 -Json
-pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode Plan -Json
-pwsh -NoProfile -File .\scripts\Sync-RekordboxGenreTaxonomy.ps1 -Mode CopyApply -Apply -Json
-```
-
-> **Warning**: Modifying the Rekordbox `master.db` directly carries risks. Always ensure Rekordbox is closed and you have backups before running scripts with `-Apply` flags.
-
-## Legal & Copyright Disclaimer
-
-> [!WARNING]
-> **Use at Your Own Risk.** These scripts interact directly with Rekordbox/Serato SQLite databases and file systems. Incorrect use **can corrupt your library**. Always back up your `master.db` and your audio files before running any destructive operations (like duplicate removals or relinking).
-
-**1. Personal Use Only & Copyright**
-This project is intended strictly for personal, private management of **legally acquired** audio files (e.g., purchases, legal promos, record pools). 
-- This repository **does not** contain or distribute copyrighted audio files.
-- The author does not endorse, encourage, or facilitate the unauthorized downloading, ripping, or distribution of copyrighted material. Any scripts interfacing with third-party APIs (like Spotify or TIDAL) are meant solely for metadata matching and library coverage auditing.
-
-**2. Terms of Service**
-Users are responsible for ensuring that their use of these scripts complies with the Terms of Service of any third-party software, streaming platform, or API they interact with.
-
-**3. Trademarks & Affiliation**
-- **Rekordbox** and **Pioneer DJ** are trademarks of AlphaTheta Corporation.
-- **Serato** is a trademark of Serato Limited.
-- **Spotify**, **TIDAL**, **Audio Processor**, and **OneTagger** are trademarks of their respective owners.
-- This project is **100% unofficial and independent**. It is not affiliated with, sponsored by, or endorsed by AlphaTheta, Pioneer DJ, Serato, or any other mentioned brand. All trademarks belong to their respective owners.
-
-## Classement complet et contrôles d’export USB
-
-La [méthode de fiabilité USB](docs/usb-export-reliability.md) décrit les erreurs
-de compteur, d’index et de chemins d’analyse rencontrées sur un export natif,
-ainsi que les contrôles reproductibles associés. Les modules de profil natif
-sont des briques d’intégration ; ce dépôt ne fournit pas encore un exporteur
-universel prêt à synchroniser n’importe quelle clé depuis l’interface graphique.
-
-Un [registre provisoire de bacs](docs/usb-export-reliability.md#classement-sans-inventer-un-genre)
-peut compléter la taxonomie, sans modifier les genres des fichiers. Les données
-réelles restent dans `runtime/`, ignoré par Git.
-
-Tests synthétiques, sans bibliothèque musicale ni compte connecté :
-
-```text
+git clone https://github.com/NathanOtano/handshakes-dj-library-tools.git
+cd handshakes-dj-library-tools
 python -m unittest discover -s tests -v
 ```
+
+Pour les commandes `.ps1`, utiliser **PowerShell 7 ou supérieur** sur Windows.
+Les dépendances supplémentaires varient selon l’outil : `pyrekordbox` et son
+pilote SQLCipher pour les bases Rekordbox, `mutagen` pour certains tags,
+Chromaprint/`fpcalc` pour certains rapprochements audio. Elles ne sont pas
+nécessaires aux tests ci-dessus. Les commandes Python des helpers peuvent être
+portables ; l’ensemble des scripts n’est pas validé sur macOS ou Linux.
+
+## Préparer sa bibliothèque
+
+1. Lire le [guide](docs/usage.md), choisir un seul outil et examiner ses paramètres.
+2. Copier les modèles de `config/` vers des fichiers locaux puis adapter leurs
+   chemins. Les modèles contiennent des valeurs fictives.
+3. Fermer les logiciels DJ et conserver une sauvegarde cohérente avant toute
+   opération sur une collection.
+4. Examiner le rapport ou le plan, tester sur une copie lorsque le mode existe,
+   puis appliquer uniquement le lot validé. Les scripts ont des contrats
+   différents : ne pas supposer que chaque commande possède un mode `Plan`.
+
+Un agent doit respecter les mêmes étapes : périmètre explicite, lecture du script,
+prévisualisation, autorisation avant écriture réelle et vérification après coup.
+Un code de sortie réussi ne suffit pas à prouver la lecture sur un appareil DJ.
+
+## Ce qui est vérifié
+
+- **12 tests synthétiques** couvrent les bacs provisoires, la couverture d’une
+  sélection USB, les limites de playlists et le profil natif étudié.
+- Des essais ciblés sur **XDJ-AERO** ont confirmé un compteur corrigé et la
+  recherche par artiste d’un titre avec son analyse reconnue. Les détails et
+  limites sont dans la [méthode USB](docs/usb-export-reliability.md).
+- Les autres scripts sont des outils spécialisés à adapter et à vérifier sur
+  des copies. La suite de tests ne certifie pas toutes leurs opérations.
+
+Les helpers USB nécessitent une intégration avec un lecteur/éditeur de base
+natif et une bibliothèque analysée. Ils ne génèrent pas seuls un export complet.
+Les essais AERO ne prouvent ni la lecture de chaque titre, ni la compatibilité
+universelle avec les autres lecteurs ou versions de Rekordbox.
+
+## Organisation et documentation
+
+- `scripts/` : commandes et helpers ; [catalogue](scripts/README.md).
+- `tests/` : cas synthétiques sans bibliothèque réelle.
+- `config/` : modèles de configuration ; `schemas/` : schéma de taxonomie.
+- [Utilisation et configuration](docs/usage.md).
+- [Fiabilité du classement et de l’export USB](docs/usb-export-reliability.md).
+- [Étude expérimentale USB/MIDI de contrôleurs](docs/USB_MIDI_MAPPING_GUIDE.md) :
+  sujet distinct du classement musical et de l’export USB.
+- [Historique](CHANGELOG.md), [sécurité](SECURITY.md), [licence MIT](LICENSE).
+
+Conserver les bases, fichiers audio, registres de bacs, rapports, identifiants et
+captures dans des emplacements locaux ignorés par Git. Ne jamais joindre une
+bibliothèque réelle ou un identifiant de connexion à une issue.
+
+## Licence et services tiers
+
+Le code est distribué sous licence MIT. Utiliser uniquement des fichiers audio
+dont on détient les droits nécessaires et respecter les conditions des services
+tiers. Aucun audio, identifiant de service ou clé de base n’est distribué.
+Ce projet indépendant n’est affilié ni à AlphaTheta/Pioneer DJ, ni à Serato,
+Spotify, TIDAL ou aux autres marques citées. Une modification directe de base
+peut endommager une collection : garder des sauvegardes et valider les copies.

@@ -1,5 +1,11 @@
 # Scripts
 
+Ce catalogue décrit des commandes spécialisées à adapter à sa bibliothèque.
+Commencer par le [guide d’utilisation et de configuration](../docs/usage.md).
+Les 12 tests synthétiques du dépôt couvrent les helpers de bacs et USB ; ils ne
+certifient pas l’ensemble des scripts ci-dessous. Les exemples d’application
+réelle exigent un plan vérifié, une sauvegarde et une autorisation explicite.
+
 ## `Test-DjLibraryReadiness.ps1`
 
 Vérifie les chemins et les outils configurés. Ne modifie rien, sauf avec `-CreateMissingFolders` pour créer les dossiers de travail non critiques.
@@ -77,16 +83,16 @@ pwsh -NoProfile -File .\scripts\Invoke-RekordboxControlledWrite.ps1 -Mode AddCon
 
 Ne lancer le mode live avec `-Apply -ConfirmLiveWrite` qu’après validation manuelle du dry-run, sauvegarde et fermeture complète de Rekordbox.
 
-## `Add-RekordboxProcessed_Library_RootContent.ps1`
+## `Add-RekordboxProcessedContent.ps1`
 
 Ajoute à la collection Rekordbox les fichiers présents dans `C:\DJ_Music\Processed_Library_Root` qui ne sont pas déjà référencés par chemin exact normalisé. Le script écrit d’abord un plan sous `reports/`, peut valider l’ajout sur une copie de `master.db`, puis applique en live seulement avec `-Apply -ConfirmLiveWrite`, Rekordbox fermé, et une sauvegarde automatique.
 
 Après un audit de doublons, passer le CSV `local-duplicate-candidates-*.csv` pour éviter d’ajouter les chemins marqués `delete_candidate`.
 
 ```powershell
-pwsh -NoProfile -File .\scripts\Add-RekordboxProcessed_Library_RootContent.ps1 -Mode Plan -DuplicateCsv reports\local-duplicate-candidates-YYYYMMDD-HHMMSS.csv -Json
-pwsh -NoProfile -File .\scripts\Add-RekordboxProcessed_Library_RootContent.ps1 -Mode CopyApply -Apply -DuplicateCsv reports\local-duplicate-candidates-YYYYMMDD-HHMMSS.csv -Json
-pwsh -NoProfile -File .\scripts\Add-RekordboxProcessed_Library_RootContent.ps1 -Mode LiveApply -Apply -ConfirmLiveWrite -DuplicateCsv reports\local-duplicate-candidates-YYYYMMDD-HHMMSS.csv -Json
+pwsh -NoProfile -File .\scripts\Add-RekordboxProcessedContent.ps1 -Mode Plan -DuplicateCsv reports\local-duplicate-candidates-YYYYMMDD-HHMMSS.csv -Json
+pwsh -NoProfile -File .\scripts\Add-RekordboxProcessedContent.ps1 -Mode CopyApply -Apply -DuplicateCsv reports\local-duplicate-candidates-YYYYMMDD-HHMMSS.csv -Json
+pwsh -NoProfile -File .\scripts\Add-RekordboxProcessedContent.ps1 -Mode LiveApply -Apply -ConfirmLiveWrite -DuplicateCsv reports\local-duplicate-candidates-YYYYMMDD-HHMMSS.csv -Json
 ```
 
 ## `Sync-RekordboxSmartPlaylists.ps1`

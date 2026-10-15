@@ -1,9 +1,9 @@
 {
   "tool": "handshakes-dj-library-tools",
   "mode": "source-public",
-  "scope": "Portable DJ bucket and native USB reliability helpers; source update only",
+  "scope": "CLI source distribution, documentation and configuration cleanup",
   "publicTarget": "https://github.com/NathanOtano/handshakes-dj-library-tools",
-  "basePublicCommit": "13a22150e4052cbd44d4cfd7da47054ac1f3745e",
+  "basePublicCommit": "27cdf143d17df658a0cec40674682cb15c262b23",
   "export": {
     "method": "explicit file allowlist",
     "excludedClasses": [
@@ -17,7 +17,7 @@
     ]
   },
   "checks": {
-    "history": "Only existing public ancestry;10 existing commits scanned by Gitleaks8.30.1 with redaction,0 findings",
+    "history": "Existing public ancestry only; Gitleaks history scan with redaction",
     "personalData": "Strict public safety scan:0 failures",
     "warnings": {
       "rule": "sensitive-keyword-review",
@@ -25,9 +25,9 @@
     },
     "tests": "12 synthetic Python tests pass on Python3.12 without private databases or authenticated services",
     "license": "MIT; new helpers are original integration code; no third-party decoder or database key bundled",
-    "install": "Source modules tested in a clean public checkout using standard Python; no installer or GUI change",
-    "runtime": "No running service, model download or live USB write",
-    "assets": "not_applicable: source-only update; existing graphical installers are unchanged",
+    "install": "Source-only distribution; path template parsed by the read-only readiness command; no installer provided",
+    "runtime": "No library/database/USB mutation; no background service",
+    "assets": "not_applicable: no GUI, binary or installer distributed",
     "hardware": "Targeted XDJ-AERO observations only; no universal device or per-track playback guarantee",
     "contentScan": {
       "tool": "Gitleaks",
@@ -38,23 +38,179 @@
   "files": [
     {
       "path": ".gitignore",
-      "sha256": "c202e2647e2444125d2998d73da05c75484e379c743c9690a31b5c69ad9457e3"
+      "sha256": "4a538041ce95ca943e3f6e4335306fd8f80d32db05c4aa4f7b28ef9070737d73"
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "a9914f3e88d08d2e06927108fb3a6a34e09feda697dd56919cd9b865a7ad014c"
+      "sha256": "fb66c7c16c789e18d76e8babdef969576a70b725c3d80322ede2330bb396d5fa"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "1126322e2cc8d165adc4c792eeb195717de2bcc7b39be1ce77959d78e87ef685"
     },
     {
       "path": "README.md",
-      "sha256": "e8b6811b47ce47fd09310160beec1dc57fb3272ffb280f8f2418ae0c4a8648db"
+      "sha256": "a856ba5fad11c915ab0f4c12a6aada798cf7e4b986dcc694e0098055992cb723"
     },
     {
       "path": "SECURITY.md",
       "sha256": "f611ff0275e217c25fa0e71abe4aa4df010f65fbfcccad8725e0708bcf01ef08"
     },
     {
+      "path": "config/dj-genre-taxonomy.json.example",
+      "sha256": "13325ddc6f2717d4920f7ca8c1c7a17398f8f0772879c408ce56acf45380e458"
+    },
+    {
+      "path": "config/dj-library.paths.json.example",
+      "sha256": "32583e6745af7137d4dd29bc973c0f474583f8410db07b390573f1d53f3ec251"
+    },
+    {
+      "path": "docs/USB_MIDI_MAPPING_GUIDE.md",
+      "sha256": "36856d5a5c1f8b7a0b9fda3e75e0cec4a4e1287afcc78c39730a1ba99f8c84d7"
+    },
+    {
+      "path": "docs/usage.md",
+      "sha256": "464b8209b43ea8504909fd452f2a44055a65e196dc66abba0516fd020bfd76c0"
+    },
+    {
       "path": "docs/usb-export-reliability.md",
       "sha256": "75c13f5eba52748b5c24efb30efa0b5596b5f8c767f0b45ca6b3fee1efcf8887"
+    },
+    {
+      "path": "schemas/dj-genre-taxonomy.schema.json",
+      "sha256": "38c9738bb29664a1b9e627b08d850553f571268804871e40359bc4a6e6979395"
+    },
+    {
+      "path": "scripts/Add-RekordboxProcessedContent.ps1",
+      "sha256": "09333f0ee25667304c7d1697ac25802104593b7857555b0eba6e1fd7415fbd4f"
+    },
+    {
+      "path": "scripts/Audit-DjChromaprintOverlap.ps1",
+      "sha256": "9939be3e350e56faf38bc4c3045a85b6f73cd98f47989f0cf2f528c91ea302df"
+    },
+    {
+      "path": "scripts/Audit-DjLibraryCleanup.ps1",
+      "sha256": "a1f81068d5a2ad4c4b1ab710db4c1fb61c966519c14d75e2e41758546371d4a8"
+    },
+    {
+      "path": "scripts/Audit-RekordboxGenreTaxonomy.ps1",
+      "sha256": "7294befcd38cb099ef5b948f7a163be01cb7e88396d7fc3ef0335d9d4d52b81f"
+    },
+    {
+      "path": "scripts/Export-DjControllerUsbPcapMidi.ps1",
+      "sha256": "269a6bf0aea5dbbfb9d3b75c07c6db3aafd2989dd98f57d4999d9719499de4bf"
+    },
+    {
+      "path": "scripts/Export-DjControllerWifiDiagnostics.ps1",
+      "sha256": "51db7368b126f21f6b867d13174e884a94270c27f37c6271bcde94c2bfb23b5d"
+    },
+    {
+      "path": "scripts/Export-DjControllerWindowsDiagnostics.ps1",
+      "sha256": "d40164da854a5034e7b1a92bbee9888bdd5e1de8763569d63b364989a2625101"
+    },
+    {
+      "path": "scripts/Export-DjLibraryInventory.ps1",
+      "sha256": "38e8c188a267c5444a4ec1f35f1968b9a6aecfb51be1444b51aab0b79f9ffe42"
+    },
+    {
+      "path": "scripts/Import-AuthorizedAudio.ps1",
+      "sha256": "cc9ced2792db63cd65326dd74aec9256e1c916a36227e12a6284682d5a10fb3f"
+    },
+    {
+      "path": "scripts/Import-GenreRecommendations.ps1",
+      "sha256": "a3054fc05057c485f0fcb14aa87fcc521d6937003021a204c7cdb46eaedadb1c"
+    },
+    {
+      "path": "scripts/Install-DjControllerRekordboxMidiMapping.ps1",
+      "sha256": "65284acaccd89e3c2b1c03c12ebc8d3b3a9d88ed251b5c93f30cbb9f7ac4e6a4"
+    },
+    {
+      "path": "scripts/Invoke-DjControllerUsbPcapMidiBridge.ps1",
+      "sha256": "029b968d05a255a96fd090d4431c06b17dc13b149897018842ddd856f1044075"
+    },
+    {
+      "path": "scripts/Invoke-DjFileOperation.ps1",
+      "sha256": "9522e851876821b063f05e5c752fa7c1fa357fefec209034b8a5086133bd8dc0"
+    },
+    {
+      "path": "scripts/Invoke-OneTaggerSpotifyRetry.ps1",
+      "sha256": "891d7e3f1b90c5f69eddbdcc849b4dd70c9937b8f37e4140c2fc5b9e9af06c1c"
+    },
+    {
+      "path": "scripts/Invoke-RekordboxControlledWrite.ps1",
+      "sha256": "3b91b181f26535d95b115aa89a42ef7d4f7d698b4aa1138609c1431105259559"
+    },
+    {
+      "path": "scripts/Invoke-TidalOnlineLibraryCheck.ps1",
+      "sha256": "aafed9b07e1d8ee552312f56e93be2e784f79f15329293e306cf71708e9c376a"
+    },
+    {
+      "path": "scripts/Measure-AuthorizedAudioQuality.ps1",
+      "sha256": "d72173782e845687f1f4fcaed0ab4d9f3df8062f6306931c4949b734efc9d96f"
+    },
+    {
+      "path": "scripts/New-PlaylistAcquisitionPlan.ps1",
+      "sha256": "e579c3607611af03603fc6e3ac4999acd1a5c5afa535b32a5541e5ec253819d8"
+    },
+    {
+      "path": "scripts/New-PlaylistJob.ps1",
+      "sha256": "dc4fa30a13cc20fbc041adfa01f397eab4e4ee7d7081a3822e66f6cf983fc580"
+    },
+    {
+      "path": "scripts/README.md",
+      "sha256": "b69b4050eea5f66f03e51219da0044f3ed3fa90ba0830d40f82a2e8d4a66ccd9"
+    },
+    {
+      "path": "scripts/Register-OneTaggerSpotifyRetryTask.ps1",
+      "sha256": "8845958989f3855b101e6c28e3c392a656f512d89dafc32bdd78ce65781a828d"
+    },
+    {
+      "path": "scripts/Remove-DjExactDuplicates.ps1",
+      "sha256": "b89d2e9ecb27722cdf405f9207ed600ee37cc0e9fe6bf126df15c93a528f4c59"
+    },
+    {
+      "path": "scripts/Resolve-DjChromaprintDuplicates.ps1",
+      "sha256": "e4576d23c48756e73c7e347406405a24e8a250b4ca392ef25d525a70cfef0876"
+    },
+    {
+      "path": "scripts/Resolve-DjGenreCandidates.ps1",
+      "sha256": "c43feec896b1ccf635da870f8aaea9f001e8286771c703901dd0957e0f8ddb45"
+    },
+    {
+      "path": "scripts/Start-OneTaggerCoverageRun.ps1",
+      "sha256": "ac759c7587559f285e4fe4a5607340231a98a16ccc3879df70f2d8c101a9182a"
+    },
+    {
+      "path": "scripts/Sync-DjControlDatabase.ps1",
+      "sha256": "81174409a0af036d67c9b0d419b7390d55dcc5b1bc518e207574e2119e874feb"
+    },
+    {
+      "path": "scripts/Sync-RekordboxGenreTaxonomy.ps1",
+      "sha256": "943cd69775b4a7031c00cb2c10990f85b4996add91eb5bc18b4613bb12491df5"
+    },
+    {
+      "path": "scripts/Sync-RekordboxMountedDrivePaths.ps1",
+      "sha256": "b66f71a6a3d65dcf56fb68ac4a65e5f14e3d759d70caee883c6bb6a339cc2af0"
+    },
+    {
+      "path": "scripts/Sync-RekordboxSmartPlaylists.ps1",
+      "sha256": "b96d75425fe67c782f60e9ef81347a3ce7c8b5888aa326dd7346b37608de441c"
+    },
+    {
+      "path": "scripts/Test-DjControllerMidiInput.ps1",
+      "sha256": "87efc838fa2c74e2142c2da0fb6ab2ad60ba98a3269975b3b01cfa0be3eae2e6"
+    },
+    {
+      "path": "scripts/Test-DjDuplicateSanity.ps1",
+      "sha256": "878f7a136fff3d868bd28a96f7e12b24a44a3921383b01773a944ec411ea4621"
+    },
+    {
+      "path": "scripts/Test-DjLibraryReadiness.ps1",
+      "sha256": "8120e1b401b7c8a8567e45408d20f307154cf338e57812cf55628ae8c9082fe7"
+    },
+    {
+      "path": "scripts/Update-OneTaggerPlatformCoverage.ps1",
+      "sha256": "4d88c170724bf810f2b2865507f11473ba200a60f861b03041de2ecf11feb2d6"
     },
     {
       "path": "scripts/audit_dj_usb_readiness.py",
@@ -65,12 +221,124 @@
       "sha256": "1019353627024159585c5d7c1f1a51e2f0d6e079bca8a87ef8fefbdb346afd4b"
     },
     {
+      "path": "scripts/dj_chromaprint_overlap.py",
+      "sha256": "6bc2610559084c2356d2a0d8969567f949303d7828ab289e279205006ad4d6a6"
+    },
+    {
+      "path": "scripts/dj_cleanup_audit.py",
+      "sha256": "e98d139d4e686bb54ed06e58728590d14a7e9691183b3ab7a630f322caa3232d"
+    },
+    {
+      "path": "scripts/dj_control_db.py",
+      "sha256": "6d87884b740fbc4aeedb3b535c44e45aff2732c9bead71d61aae871de54f8917"
+    },
+    {
+      "path": "scripts/dj_controller_usbpcap_extract.py",
+      "sha256": "8bc806a5e1e13457755aa2d74c8d3bec9db8b3e4a203708fb40632e21bd9515f"
+    },
+    {
+      "path": "scripts/dj_controller_usbpcap_midi_bridge.py",
+      "sha256": "d6a3b12905b7fb5a2a8cb46639e52118ca34089d7bc84ec5bfa9bdaa1604532a"
+    },
+    {
+      "path": "scripts/dj_duplicate_sanity.py",
+      "sha256": "723708a3cf50b73ce6c9f36e24572ec301e1025d6252abe980ca4a06b7d55993"
+    },
+    {
+      "path": "scripts/dj_file_operation.py",
+      "sha256": "8ae77adb4432124e45b7afbbf59ca1561f860812a4f13ae5663f0cfffe35a0a6"
+    },
+    {
+      "path": "scripts/dj_genre_resolver.py",
+      "sha256": "9e328fcbc6604037747eef0ad19a5ad29fc2998740211cd5dca965d944a2bec0"
+    },
+    {
+      "path": "scripts/genre_recommendation_apply.py",
+      "sha256": "387886cea7f1287cb0013b915c9916468e437011897ca4d0df0446dbe799185c"
+    },
+    {
+      "path": "scripts/onetagger_coverage_runner.js",
+      "sha256": "fdbbfb27d6484e9e109ebdab27f61e48b8e7cb777dac198f01a35825ed7378d9"
+    },
+    {
+      "path": "scripts/rekordbox_add_processed_content.py",
+      "sha256": "c378a2bafde9699b61407cb96ffd54f1127657a83e43ef6f496f99e242739259"
+    },
+    {
+      "path": "scripts/rekordbox_chromaprint_duplicate_cleanup.py",
+      "sha256": "655d8b6e82a2519397fbddaef8af734614c917749e4ea20f00e48bac04d7c800"
+    },
+    {
+      "path": "scripts/rekordbox_controlled_write.py",
+      "sha256": "31095587945dd5e18faaeb0f1fdf9a979e64e75c4c30a23e5849b4ef9809f80f"
+    },
+    {
+      "path": "scripts/rekordbox_exact_duplicate_cleanup.py",
+      "sha256": "16a65a8d5d36be85fdff0003158dd841437d1866f92992a37ac34e6101428331"
+    },
+    {
+      "path": "scripts/rekordbox_export_crates.py",
+      "sha256": "8d6ca5bac073aafc17f88d3132c4ce8d36b8e36934a6d363670f43f27d85bbf3"
+    },
+    {
+      "path": "scripts/rekordbox_export_m3u.py",
+      "sha256": "dc41053d19722f71d083059e3d08e0a50936336dcea9cae756bceb0017b37f14"
+    },
+    {
       "path": "scripts/rekordbox_genre_taxonomy_audit.py",
       "sha256": "9450fb7cc7b6f2e2d8ad0de2427171544bb1c83074a1deafb197cc00ec8ea754"
     },
     {
       "path": "scripts/rekordbox_genre_taxonomy_sync.py",
       "sha256": "d275b9f2cdd45d5f132ff08ff9969c1e5b26d3993d520cc03c17c5336a87d387"
+    },
+    {
+      "path": "scripts/rekordbox_history_orphan_repair.py",
+      "sha256": "1a7b97bc37df8f0dc390af8e2b18557b0c8b38fd4595b0c51147e360f9d5fa74"
+    },
+    {
+      "path": "scripts/rekordbox_local_playlist_export.py",
+      "sha256": "aa1518554ea01aa91b6487f93dbf9d57b7e97614482e80b305fe2d5bd9c51897"
+    },
+    {
+      "path": "scripts/rekordbox_metadata_normalize_from_tags.py",
+      "sha256": "bd79b2837e4ba8b4a3ec342a5b64d40150b5313a970e781bfbf8889012bdcbcf"
+    },
+    {
+      "path": "scripts/rekordbox_mounted_drive_relink.py",
+      "sha256": "ba67a07df3783e9b194fafc59f4f20b7694ba8cb4e93fbba126e3c673b8cc785"
+    },
+    {
+      "path": "scripts/rekordbox_organize_labels.py",
+      "sha256": "432511b3b907b886716862ca363ac23a32c62c940c75267d5a2b2f4e6e323a51"
+    },
+    {
+      "path": "scripts/rekordbox_processed_reconcile.py",
+      "sha256": "5b2c0fb0145d7f3b90cbf40d5d4539bfc9c13bcceb6857e0d4ff43cd802f1506"
+    },
+    {
+      "path": "scripts/rekordbox_smart_playlist_sync.py",
+      "sha256": "ca6a6cf4ab55f01c89447e336bba9155296c00215422d33b1418657c292da652"
+    },
+    {
+      "path": "scripts/rekordbox_suffix_cleanup.py",
+      "sha256": "128e54234bd0dc5e1dd56dbe7aaf24d049096cfd12c4b7df06c3496c08127f03"
+    },
+    {
+      "path": "scripts/serato_audit.py",
+      "sha256": "5bcd9dc33e31c762250b1ec7d279984daa02ca4a5827c9b35f42e7f9cb78c1a4"
+    },
+    {
+      "path": "scripts/serato_duplicate_merger.py",
+      "sha256": "adfb7bd6b1f889a933bae1b8429ab5b057f883b2d60214fa0fbfeca72c830c8a"
+    },
+    {
+      "path": "scripts/serato_purge_missing.py",
+      "sha256": "2454a59b616ae1fe2f3c4d6b8c45bb86052f3a8678be620d0102f9a5444c0893"
+    },
+    {
+      "path": "scripts/tidal_online_library_check.py",
+      "sha256": "95af85f6afa1f14fefba2e59c93e0a74c1e6cb94987c7f7a9d5bbeb777d63ccb"
     },
     {
       "path": "scripts/usb_export_policy.py",
@@ -104,5 +372,11 @@
       "path": "tests/test_usb_playlist_limits.py",
       "sha256": "ec4d6e47769cb9c8c8dea251064ce38d5003448b81c80039e0f446985ab6a105"
     }
-  ]
+  ],
+  "distribution": {
+    "interface": "CLI",
+    "audience": "Advanced users and supervised agents",
+    "configuration": "Fictitious path and taxonomy templates; real configurations ignored",
+    "validation": "Synthetic helper tests and targeted AERO observations; other scripts require validation on copies"
+  }
 }

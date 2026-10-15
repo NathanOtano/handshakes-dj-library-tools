@@ -1,0 +1,30 @@
+{
+  "musicRoot": "C:/DJ_Music",
+  "playlistRoot": "C:/DJ_Music/Playlists",
+  "libraryRoot": "C:/DJ_Music/Playlists/ALL_TRACKS",
+  "intakeRoot": "inbox",
+  "postProcessed_Library_RootRoot": "C:/DJ_Music/Processed_Library_Root",
+  "reportsRoot": "reports",
+  "audioExtensions": [
+    ".mp3",
+    ".wav",
+    ".aif",
+    ".aiff",
+    ".flac",
+    ".m4a"
+  ],
+  "toolHints": {
+    "processed_library_root": {
+      "displayName": "Audio Processor",
+      "configuredPath": ""
+    },
+    "OneTagger": {
+      "displayName": "OneTagger",
+      "configuredPath": ""
+    },
+    "chromaprint": {
+      "displayName": "Chromaprint fpcalc",
+      "configuredPath": ""
+    }
+  }
+}
