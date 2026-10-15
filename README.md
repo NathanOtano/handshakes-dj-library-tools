@@ -4,8 +4,13 @@
 
 Scripts Python et PowerShell pour auditer une bibliothèque DJ, préparer des
 modifications Rekordbox/Serato et contrôler le classement ainsi que les données
-d’un export USB. Le dépôt distribue du code source ; il ne fournit actuellement
-ni interface graphique, ni installateur, ni exporteur USB universel prêt à l’emploi.
+d’un export USB. Le dépôt distribue du code source, sans installateur ni
+exporteur USB universel prêt à l’emploi. La ligne de commande reste la référence.
+
+Une [interface locale expérimentale](docs/local-ui.md) propose trois étapes :
+vérifier, préparer, synchroniser. Elle exige des commandes configurées localement
+et conserve les contrôles de l’exporteur. Elle n’est pas un installateur graphique
+validé pour toutes les bibliothèques et tous les lecteurs.
 
 ## Choisir un point d’entrée
 

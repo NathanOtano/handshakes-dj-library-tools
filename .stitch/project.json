@@ -1,0 +1,8 @@
+{
+  "status": "unavailable",
+  "generationExecuted": false,
+  "reference": "Approved three-step concept and docs/local-ui.md",
+  "screens": ["Bibliothèque", "Préparer", "Clé USB"],
+  "surface": "local browser",
+  "viewports": ["desktop", "mobile"]
+}

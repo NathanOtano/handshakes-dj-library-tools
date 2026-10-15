@@ -74,3 +74,6 @@ Thumbs.db
 *.m4a
 *.ogg
 *.opus
+
+# Versioned concept metadata only; local settings remain ignored
+!.stitch/project.json

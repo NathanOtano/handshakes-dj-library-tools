@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="dj-session" content="__SESSION__">
+<title>Handshakes DJ</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+  <header><strong>Handshakes DJ</strong><button id="help" class="quiet" title="Afficher l’aide et les limites de cette version" aria-label="Aide">?</button></header>
+  <nav aria-label="Étapes">
+    <button data-view="library" aria-current="page" title="Vérifier la bibliothèque et les titres sélectionnés">1 · Bibliothèque</button>
+    <button data-view="prepare" title="Préparer et vérifier l’aperçu de la copie">2 · Préparer</button>
+    <button data-view="usb" title="Confirmer la copie vers la clé configurée">3 · Clé USB</button>
+  </nav>
+  <div id="message" role="status" aria-live="polite"></div>
+  <section id="library" class="view">
+    <div class="heading"><h1 id="library-name">Bibliothèque</h1><span id="audit-status">À vérifier</span></div>
+    <div class="metrics" id="library-metrics"></div>
+    <ul id="issues" class="issues"></ul>
+    <button id="audit" class="primary" title="Lancer les contrôles de la bibliothèque sans modifier ses fichiers">Vérifier la bibliothèque</button>
+  </section>
+  <section id="prepare" class="view" hidden>
+    <div class="heading"><h1>Aperçu de la copie</h1><span id="prepare-status">Non préparé</span></div>
+    <div id="prepare-content" class="empty">Vérifier la bibliothèque avant de préparer la clé.</div>
+    <button id="prepare-action" class="primary" title="Vérifier l’export local puis calculer les changements sur la clé">Préparer l’aperçu</button>
+  </section>
+  <section id="usb" class="view" hidden>
+    <div class="heading"><h1 id="target-name">Clé USB</h1><span id="sync-status">En attente</span></div>
+    <div id="usb-content" class="empty">Préparer l’aperçu pour identifier la clé et ses changements.</div>
+    <button id="sync" class="primary" title="Afficher la confirmation avant toute copie vers la clé" disabled>Synchroniser la clé</button>
+  </section>
+  <div id="progress" hidden><div class="progress-line"><span id="phase"></span><button id="stop" class="quiet" title="Demander un arrêt contrôlé de l’opération">Arrêter</button></div><progress aria-label="Progression de l’opération"></progress></div>
+  <details id="details"><summary title="Consulter le journal local de l’opération">Détails</summary><pre id="log"></pre></details>
+  <footer><span>Local</span><button id="shutdown" class="quiet" title="Arrêter le serveur local après la fin des opérations">Arrêter l’interface</button></footer>
+</main>
+<dialog id="confirm"><h2>Confirmer la copie</h2><p id="confirm-target"></p><p>Les sauvegardes et contrôles de l’exporteur restent obligatoires.</p><div class="actions"><button id="cancel" title="Revenir sans copier">Annuler</button><button id="confirm-copy" class="primary" title="Appliquer uniquement l’aperçu affiché">Confirmer la copie</button></div></dialog>
+<dialog id="help-dialog"><h2>Trois étapes</h2><p>Vérifier la bibliothèque, préparer l’aperçu, puis confirmer la copie vers la clé.</p><p>La préparation ne modifie pas la clé. Les titres sans bac ou sans analyse doivent être résolus avant l’export. Les commandes sont configurées localement.</p><p>« Copie vérifiée » ne remplace pas un essai sur le lecteur DJ.</p><button id="close-help" class="primary" title="Fermer l’aide">Fermer</button></dialog>
+<script src="/app.js"></script>
+</body></html>

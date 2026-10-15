@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "libraryLabel": "Ma bibliothèque",
+  "targetLabel": "Clé à configurer",
+  "runtime": "runtime/local-ui",
+  "sealFiles": [],
+  "tasks": {
+    "audit": {"commands": [], "cwd": ".", "report": "runtime/local-ui/audit.json"},
+    "prepare": {"commands": [], "cwd": ".", "report": "runtime/local-ui/plan.json"},
+    "sync": {"commands": [], "cwd": ".", "report": "runtime/local-ui/sync.json", "stopFile": "runtime/local-ui/STOP"}
+  }
+}
