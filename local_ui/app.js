@@ -3,7 +3,9 @@ const el = id => document.getElementById(id);
 const session = document.querySelector('meta[name="dj-session"]').content;
 let state = {reports: {}}, pending = false, alive = true;
 const number = n => Number(n || 0).toLocaleString('fr-FR');
-const size = n => (Number(n || 0) / 1073741824).toLocaleString('fr-FR', {maximumFractionDigits: 1}) + ' Go';
+const size = n => {const bytes=Number(n||0), unit=Math.min(3,Math.max(0,Math.floor(Math.log(Math.max(1,bytes))/Math.log(1024))));return (bytes/1024**unit).toLocaleString('fr-FR',{maximumFractionDigits:1})+' '+['o','Ko','Mo','Go'][unit];};
+const issuesFR = {empty_usb_selection:'Aucun morceau sélectionné pour la clé.', unknown_selected_ids:'Certains morceaux sélectionnés sont inconnus.', selected_tracks_without_bucket:'Des morceaux n’ont pas encore de DJ bac.', derived_buckets_need_refresh:'Les bacs doivent être actualisés.', selected_audio_missing:'Des fichiers audio sont introuvables.', playlist_above_1000:'Une playlist dépasse 1 000 morceaux.', usb_elements_above_limit:'La sélection USB dépasse 1 000 éléments.'};
+const phasesFR = {backup:'Sauvegarde', audio:'Copie des morceaux', metadata:'Copie des analyses', install_databases:'Installation des catalogues', readback:'Relecture de la clé', complete:'Terminé'};
 function show(view) {
   document.querySelectorAll('.view').forEach(p => {p.hidden = p.id !== view;});
   document.querySelectorAll('nav button').forEach(b => {if (b.dataset.view === view) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');});
@@ -25,7 +27,7 @@ function render() {
   el('library-metrics').replaceChildren(); el('issues').replaceChildren();
   if (audit) {
     el('library-metrics').append(metric(audit.tracks, 'Morceaux'), metric(audit.unbucketedCount ?? audit.unbucketed ?? 0, 'Sans bac'), metric(audit.elements ?? ((audit.playlists || 0) + (audit.folders || 0)), 'Éléments USB / 1 000'));
-    for (const issue of (audit.errors || [])) el('issues').append(node('li', String(issue)));
+    for (const issue of (audit.errors || [])) {const code=String(issue), message=issuesFR[code] || (code.startsWith('usb_bucket_membership_mismatch:') ? 'La sélection d’un bac doit être actualisée.' : 'Un contrôle n’est pas validé. Consulter les détails.');const li=node('li',message);li.title=code;el('issues').append(li);}
   }
   el('audit-status').textContent = audit ? (!state.auditFresh ? 'Dernier contrôle' : audit.status === 'pass' ? 'Vérifiée' : 'À corriger') : 'À vérifier';
   el('prepare-status').textContent = state.planToken ? 'Prêt à confirmer' : 'Non préparé';
@@ -45,7 +47,7 @@ function render() {
   el('sync').disabled = state.busy || pending || !state.planToken || !state.configured?.sync;
   el('shutdown').disabled = state.busy || pending;
   el('progress').hidden = !state.busy;
-  el('phase').textContent = state.progress?.phase || state.phase || '';
+  el('phase').textContent = phasesFR[state.progress?.phase] || state.phase || '';
   const progress = document.querySelector('progress');
   if (state.progress?.total_files) {progress.max = state.progress.total_files; progress.value = state.progress.completed_files || 0;} else progress.removeAttribute('value');
 }
